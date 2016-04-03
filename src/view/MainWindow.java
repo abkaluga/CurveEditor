@@ -43,7 +43,7 @@ public class MainWindow extends JFrame {
     private JCheckBox convexHull;
 
 
-    private Canvas canvas;
+    private CustomCanvas canvas;
     private final MainWindowController controller;
     private final MainWindowModel model;
 
@@ -132,7 +132,8 @@ public class MainWindow extends JFrame {
                     int h = canvas.getHeight();
                     BufferedImage bi = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
                     Graphics2D g2 = bi.createGraphics();
-                    canvas.paint(g2);
+                    g2.setBackground(canvas.getBackground());
+                    canvas.exportPaint(g2);
                     try {
                         ImageIO.write(bi, "jpg", fc.getSelectedFile());
                     } catch (IOException e1) {
@@ -156,33 +157,7 @@ public class MainWindow extends JFrame {
         });
         timer.setDelay(50);
         timer.start();
-        canvas = new Canvas() {
-
-            @Override
-            public void paint(Graphics g) {
-                super.paint(g);
-
-                if (model.getBackground() != null) {
-                    int x = (getWidth() - model.getBackground().getWidth()) / 2;
-                    int y = (getHeight() - model.getBackground().getHeight()) / 2;
-                    g.drawImage(model.getBackground(), x, y, this);
-                }
-                for (int i = 0; i < model.getCurveModel().getSize(); ++i) {
-                    Curve c = (Curve) model.getCurveModel().getElementAt(i);
-                    c.draw(g);
-                    }
-                if (model.getConvexHullModel().isPressed()){
-                    ICurve selected = (ICurve) model.getCurveModel().getSelectedItem();
-                    if (selected!=null){
-                        selected.drawConvexHull(g);
-                    }
-                }
-
-                for (int i = 0; i < model.getPointModel().getSize(); ++i) {
-                    model.getPointModel().getElementAt(i).draw(g);
-                }
-            }
-        };
+        canvas = new CustomCanvas(model);
         canvas.setSize(800, 800);
         canvas.setBackground(Color.WHITE);
         canvas.setVisible(true);
