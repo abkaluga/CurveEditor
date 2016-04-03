@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="view.MainWindow">
+  <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="4" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="0" bottom="0" right="0"/>
+    <constraints>
+      <xy x="20" y="20" width="534" height="400"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <toolbar id="ff32f">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="-1" height="20"/>
+          </grid>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="ef1fe" class="javax.swing.JButton" binding="saveButton">
+            <constraints/>
+            <properties>
+              <text value="Save"/>
+            </properties>
+          </component>
+          <component id="2ee61" class="javax.swing.JButton" binding="loadButton">
+            <constraints/>
+            <properties>
+              <text value="Load"/>
+            </properties>
+          </component>
+          <component id="6f7ea" class="javax.swing.JButton" binding="loadBackgroudButton">
+            <constraints/>
+            <properties>
+              <text value="Load backgroud"/>
+            </properties>
+          </component>
+          <component id="3c62e" class="javax.swing.JButton" binding="clearBackgroud">
+            <constraints/>
+            <properties>
+              <text value="Clear Background"/>
+            </properties>
+          </component>
+          <component id="2cbbe" class="javax.swing.JButton" binding="saveAsJpgButton" default-binding="true">
+            <constraints/>
+            <properties>
+              <text value="Save as jpg"/>
+            </properties>
+          </component>
+          <component id="c1d69" class="javax.swing.JCheckBox" binding="editMode">
+            <constraints/>
+            <properties>
+              <text value="Edit Mode"/>
+            </properties>
+          </component>
+          <component id="39a07" class="javax.swing.JCheckBox" binding="convexHull">
+            <constraints/>
+            <properties>
+              <text value="convexHull"/>
+            </properties>
+          </component>
+        </children>
+      </toolbar>
+      <toolbar id="8bbcc">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="-1" height="20"/>
+          </grid>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="84182" class="javax.swing.JButton" binding="addCurve">
+            <constraints/>
+            <properties>
+              <text value="AddCurve"/>
+            </properties>
+          </component>
+          <component id="afe12" class="javax.swing.JButton" binding="deleteCurve">
+            <constraints/>
+            <properties>
+              <text value="DeleteCurve"/>
+            </properties>
+          </component>
+          <component id="504c1" class="javax.swing.JComboBox" binding="curveComboBox">
+            <constraints/>
+            <properties>
+              <toolTipText value="curve"/>
+            </properties>
+          </component>
+          <component id="961d7" class="javax.swing.JComboBox" binding="curveColorComboBox">
+            <constraints/>
+            <properties>
+              <toolTipText value="curve Color"/>
+            </properties>
+          </component>
+          <component id="e48ce" class="javax.swing.JComboBox" binding="curveComboboxType">
+            <constraints/>
+            <properties>
+              <toolTipText value="curve Type"/>
+            </properties>
+          </component>
+        </children>
+      </toolbar>
+      <grid id="57caf" binding="canvasPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints>
+          <grid row="3" column="0" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="800" height="800"/>
+          </grid>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children/>
+      </grid>
+      <toolbar id="7710b">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="-1" height="20"/>
+          </grid>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="61838" class="javax.swing.JButton" binding="deletePointButton" default-binding="true">
+            <constraints/>
+            <properties>
+              <text value="Delete Point"/>
+            </properties>
+          </component>
+          <component id="53b75" class="javax.swing.JComboBox" binding="pointComboBox">
+            <constraints/>
+            <properties/>
+          </component>
+          <component id="c8ec" class="javax.swing.JSpinner" binding="xSpinner">
+            <constraints/>
+            <properties>
+              <toolTipText value="X"/>
+            </properties>
+          </component>
+          <component id="1a3aa" class="javax.swing.JSpinner" binding="ySpinner">
+            <constraints/>
+            <properties>
+              <toolTipText value="Y"/>
+            </properties>
+          </component>
+          <component id="837a4" class="javax.swing.JSpinner" binding="wigthSpiner">
+            <constraints/>
+            <properties/>
+          </component>
+        </children>
+      </toolbar>
+    </children>
+  </grid>
+</form>
