@@ -23,8 +23,13 @@ public class ParametrizationHelper {
     public List<Double> createParametrization(int size){
         Double table[] = new Double[size];
         IntStream.range(0,size).parallel()
-                .forEach(i -> table[i] = (double) i * 100);
+                .forEach(i -> table[i] = translate(i, size));
         return new ArrayList<>(Arrays.asList(table));
+    }
+
+
+    public Double translate(int i, int size) {
+        return (double) i / (double) (size - 1);
     }
 
 

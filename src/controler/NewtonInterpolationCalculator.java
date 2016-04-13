@@ -31,8 +31,8 @@ public class NewtonInterpolationCalculator implements ICalculator {
     public void calculate(ICurve curve) {
         if (curve instanceof Interpolated) {
             Interpolated interpolated = (Interpolated) curve;
-            List<Double> xs = Collections.synchronizedList(new ArrayList<>());
-            List<Double> ys = Collections.synchronizedList(new ArrayList<>());
+            List<Double> xs = new ArrayList<>();
+            List<Double> ys = new ArrayList<>();
             List<Double> px = ParametrizationHelper.getInstance().createParametrization(curve.getPoints().size());
             interpolated.getPoints().stream()
                     .forEach(p -> {
@@ -43,12 +43,14 @@ public class NewtonInterpolationCalculator implements ICalculator {
             Future<List<Double>> xDiff = executor.submit(() -> newtonInterpolation(Collections.unmodifiableList(px), Collections.unmodifiableList(xs)));
             Future<List<Double>> yDiff = executor.submit(() -> newtonInterpolation(Collections.unmodifiableList(px), Collections.unmodifiableList(ys)));
 
-            IPoint newPoints[] = new IPoint[(xs.size() - 1) * 100 + 1];
-            IntStream.rangeClosed(0, (xs.size() - 1) * 100).sequential().forEach(i -> {
+            int size = (xs.size() - 1) * 100;
+            IPoint newPoints[] = new IPoint[size + 1];
+            IntStream.rangeClosed(0, size).parallel().forEach(i -> {
                 IPoint p = new Point();
                 try {
-                    p.setX((int) countValue((double) i, xDiff.get(), px));
-                    p.setY((int) countValue((double) i, yDiff.get(), px));
+                    Double translated = ParametrizationHelper.getInstance().translate(i, size);
+                    p.setX((int) countValue(translated, xDiff.get(), px));
+                    p.setY((int) countValue(translated, yDiff.get(), px));
 
                 } catch (InterruptedException | ExecutionException e) {
                     e.printStackTrace();
