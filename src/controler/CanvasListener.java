@@ -1,7 +1,7 @@
 package controler;
 
 import model.*;
-import view.viewModel.MainWindowModel;
+import model.viewModel.MainWindowModel;
 
 import java.awt.*;
 import java.awt.Point;

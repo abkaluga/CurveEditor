@@ -1,5 +1,7 @@
 package model;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.beans.PropertyChangeListener;
@@ -12,10 +14,14 @@ import java.util.List;
 /**
  * Created by Albert on 12.03.2016.
  */
+@XmlRootElement(name = "Curve")
 public abstract class Curve implements ICurve {
 
+    @XmlElement
     private String name;
+    @XmlElement
     private Color color;
+    @XmlElement
     private List<IPoint> points =   new ArrayList<>();
     private List<IPoint> convexHull = new ArrayList<>();
 

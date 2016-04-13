@@ -3,11 +3,10 @@ package controler;
 import model.*;
 import model.Point;
 import utils.NameGenerator;
-import view.viewModel.MainWindowModel;
+import model.viewModel.MainWindowModel;
 
 import java.awt.*;
 import java.util.List;
-import java.util.concurrent.Semaphore;
 
 /**
  * Created by Albert on 20.03.2016.
@@ -71,7 +70,7 @@ public class MainWindowController {
         ICurve curve;
         ICurve.CurveType type = (ICurve.CurveType) model.getCurveTypeModel().getSelectedItem();
 
-        if (ICurve.CurveType.Newton.equals(type)){
+        if (ICurve.CurveType.Interpolated.equals(type)) {
             curve = new Interpolated();
         } else {
             curve = new PolygonalChain();

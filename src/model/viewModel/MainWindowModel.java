@@ -1,4 +1,4 @@
-package view.viewModel;
+package model.viewModel;
 
 import model.ICurve;
 import model.IPoint;

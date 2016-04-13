@@ -2,7 +2,7 @@ package view;
 
 import model.Curve;
 import model.ICurve;
-import view.viewModel.MainWindowModel;
+import model.viewModel.MainWindowModel;
 
 import java.awt.*;
 

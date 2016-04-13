@@ -4,7 +4,7 @@ import controler.CanvasListener;
 import controler.MainWindowController;
 import model.*;
 import utils.ImageFilter;
-import view.viewModel.MainWindowModel;
+import model.viewModel.MainWindowModel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

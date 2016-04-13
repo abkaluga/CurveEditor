@@ -11,8 +11,8 @@ import java.util.List;
 public interface ICurve {
 
     enum CurveType {
-        Chain, Newton
-    };
+        Chain, Interpolated
+    }
     String getName();
 
     void setName(String name);

@@ -1,11 +1,13 @@
 package model;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.awt.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Created by Albert on 20.03.2016.
  */
+@XmlRootElement(name = "PolygonalChain")
 public class PolygonalChain extends Curve {
 
     public static final AtomicLong count = new AtomicLong(1);
