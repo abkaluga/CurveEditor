@@ -8,6 +8,8 @@ import model.viewModel.MainWindowModel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.awt.event.*;
@@ -143,6 +145,9 @@ public class MainWindow extends JFrame {
             }
         });
 
+        convexHull.addChangeListener(e -> {
+            model.isDirty().compareAndSet(false, true);
+        });
         this.createBufferStrategy(2);
 
     }

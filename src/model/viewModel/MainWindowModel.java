@@ -15,7 +15,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * Created by Albert on 26.03.2016.
  */
 public class MainWindowModel {
-    private final SpinnerNumberModel weighModel = new SpinnerNumberModel(0,Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY,0.1f);
+    private final SpinnerNumberModel weighModel = new SpinnerNumberModel(1.0, 0, Double.POSITIVE_INFINITY, 0.5f);
     private final SpinnerNumberModel xModel = new SpinnerNumberModel(0,0,1024,1);
     private final SpinnerNumberModel yModel = new SpinnerNumberModel(0,0,1024,1);
     private final DefaultComboBoxModel<Color> colorModel = new DefaultComboBoxModel<>();

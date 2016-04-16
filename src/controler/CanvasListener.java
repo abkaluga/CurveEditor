@@ -72,7 +72,7 @@ public class CanvasListener implements MouseListener, KeyListener, MouseMotionLi
                         p.setY(p.getY()+deltaY);
                         });
             model.isDirty().compareAndSet(false,true);
-            CurveUpdater.update((ICurve) model.getCurveModel().getSelectedItem());
+            CurveUpdater.update((ICurve) model.getCurveModel().getSelectedItem(), model.isDirty());
         }
     }
 
@@ -117,7 +117,7 @@ public class CanvasListener implements MouseListener, KeyListener, MouseMotionLi
 
     @Override
     public void keyReleased(KeyEvent e) {
-        CurveUpdater.update((ICurve) model.getCurveModel().getSelectedItem());
+        CurveUpdater.update((ICurve) model.getCurveModel().getSelectedItem(), model.isDirty());
     }
 
     @Override

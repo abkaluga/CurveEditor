@@ -4,8 +4,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
-
 /**
  * Created by Albert on 02.04.2016.
  */

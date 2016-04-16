@@ -13,16 +13,24 @@ public  class NameGenerator {
 
     public static void generateName(ICurve c){
         if (c instanceof  PolygonalChain){
-            c.setName("PolygonalChain #"+PolygonalChain.count.getAndIncrement());
+            c.setName(String.format("PolygonalChain #%d", PolygonalChain.count.getAndIncrement()));
             return;
         }
         if (c instanceof NewtonInterpolated) {
-            c.setName("Interpolated #" + NewtonInterpolated.count.getAndIncrement());
+            c.setName(String.format("Interpolated #%d", NewtonInterpolated.count.getAndIncrement()));
             return;
         }
 
         if (c instanceof CubicSpineInterpolated) {
-            c.setName("Cubic spine #" + CubicSpineInterpolated.count.getAndIncrement());
+            c.setName(String.format("Cubic spine #%d", CubicSpineInterpolated.count.getAndIncrement()));
+            return;
+        }
+        if (c instanceof BeziereCurve) {
+            c.setName(String.format("Beziere  #%d", BeziereCurve.count.getAndIncrement()));
+            return;
+        }
+        if (c instanceof RationalBeziereCurve) {
+            c.setName(String.format("Rational Beziere #%d", RationalBeziereCurve.count.getAndIncrement()));
             return;
         }
 

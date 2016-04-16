@@ -34,7 +34,7 @@ public class MainWindowController {
             model.getPointModel().setSelectedItem(point);
            // handlePointChange();
             curve.setPoints(points);
-            CurveUpdater.update((ICurve) model.getCurveModel().getSelectedItem());
+            CurveUpdater.update((ICurve) model.getCurveModel().getSelectedItem(), model.isDirty());
             model.isDirty().compareAndSet(false,true);
         }
 
@@ -61,7 +61,7 @@ public class MainWindowController {
         points.remove(point);
         model.getPointModel().removeElement(point);
         curve.setPoints(points);
-        CurveUpdater.update((ICurve) model.getCurveModel().getSelectedItem());
+        CurveUpdater.update((ICurve) model.getCurveModel().getSelectedItem(), model.isDirty());
         model.isDirty().compareAndSet(false,true);
 
     }
@@ -79,6 +79,12 @@ public class MainWindowController {
                 break;
             case CubicSpineInterpolated:
                 curve = new CubicSpineInterpolated();
+                break;
+            case Beziere:
+                curve = new BeziereCurve();
+                break;
+            case RationalBeziere:
+                curve = new RationalBeziereCurve();
                 break;
         }
 
@@ -122,7 +128,7 @@ public class MainWindowController {
             point.setWeigh(model.getWeighModel().getNumber().floatValue());
             model.isDirty().compareAndSet(false,true);
             model.getLockSpinners().release();
-            CurveUpdater.update((ICurve) model.getCurveModel().getSelectedItem());
+            CurveUpdater.update((ICurve) model.getCurveModel().getSelectedItem(), model.isDirty());
         }
 
     }

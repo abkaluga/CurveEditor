@@ -11,17 +11,16 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Created by Albert on 12.03.2016.
  */
-public  class ConvexHullCalculator implements ICalculator{
+public class ConvexHullCalculator implements ICalculator {
 
     private static final ICalculator anInstance = new ConvexHullCalculator();
 
-    private static final ExecutorService executor = Executors.newSingleThreadExecutor();
-
-    private ConvexHullCalculator(){
+    private ConvexHullCalculator() {
         //intentionally left empty
     }
 
@@ -29,22 +28,18 @@ public  class ConvexHullCalculator implements ICalculator{
         return anInstance;
     }
 
-    public void calculate(ICurve curve) {
+    public void calculate(ICurve curve, AtomicBoolean dirtyIndicator) {
 
 
         List<IPoint> points = new ArrayList<>(curve.getPoints());
-        List<IPoint> convexHull = Collections.emptyList();
-        if (points.size() < 3){
+        List<IPoint> convexHull;
+        if (points.size() < 3) {
             convexHull = new ArrayList<>(points);
         } else {
-
-            try {
-                convexHull = executor.submit(() -> quickHull(points)).get();
-            } catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
-            }
+            convexHull = quickHull(points);
         }
         curve.setConvexHull(convexHull);
+        dirtyIndicator.compareAndSet(false, true);
     }
 
     private List<IPoint> quickHull(List<IPoint> points) {
@@ -96,8 +91,7 @@ public  class ConvexHullCalculator implements ICalculator{
         }
         int dist = Integer.MIN_VALUE;
         int furthestPoint = -1;
-        for (int i = 0; i < set.size(); i++)
-        {
+        for (int i = 0; i < set.size(); i++) {
             IPoint p = set.get(i);
             int distance = distance(A, B, p);
             if (distance > dist) {
@@ -115,7 +109,7 @@ public  class ConvexHullCalculator implements ICalculator{
             if (pointLocation(A, P, M) == 1) {
                 leftSetAP.add(M);
             }
-            if (pointLocation(P, B, M) == 1){
+            if (pointLocation(P, B, M) == 1) {
                 leftSetPB.add(M);
             }
         }

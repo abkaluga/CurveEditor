@@ -5,6 +5,7 @@ import utils.ParametrizationHelper;
 
 import java.util.*;
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.DoubleAdder;
 import java.util.stream.IntStream;
 
@@ -13,7 +14,7 @@ import java.util.stream.IntStream;
  */
 public class NewtonInterpolationCalculator implements ICalculator {
 
-    private static ExecutorService executor = Executors.newFixedThreadPool(2);
+    private static ExecutorService executor = CurveUpdater.executor;
 
     private static final ICalculator anInstance = new NewtonInterpolationCalculator();
 
@@ -26,7 +27,7 @@ public class NewtonInterpolationCalculator implements ICalculator {
     }
 
     @Override
-    public void calculate(ICurve curve) {
+    public void calculate(ICurve curve, AtomicBoolean dirtyIndicator) {
         if (curve instanceof NewtonInterpolated) {
             NewtonInterpolated interpolated = (NewtonInterpolated) curve;
             List<Double> xs = new ArrayList<>();
@@ -56,6 +57,7 @@ public class NewtonInterpolationCalculator implements ICalculator {
                 newPoints[i] = p;
             });
             interpolated.setInterpolatedPoints(new ArrayList<>(Arrays.asList(newPoints)));
+            dirtyIndicator.compareAndSet(false, true);
         }
     }
 
