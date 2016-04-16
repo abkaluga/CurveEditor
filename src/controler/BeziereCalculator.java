@@ -9,9 +9,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.IntStream;
 
 /**
+ *
  * Created by Albert on 16.04.2016.
  */
-public class BeziereCalculator implements ICalculator {
+class BeziereCalculator implements ICalculator {
 
     private static final ICalculator anInstance = new BeziereCalculator();
 
@@ -19,7 +20,7 @@ public class BeziereCalculator implements ICalculator {
 
     }
 
-    public static ICalculator getAnInstance() {
+    static ICalculator getAnInstance() {
         return anInstance;
     }
 
@@ -38,7 +39,7 @@ public class BeziereCalculator implements ICalculator {
     private IPoint[] getNewPoints(List<IPoint> ps, boolean rational) {
         int size = (ps.size()) * 100;
         IPoint newPoints[] = new IPoint[size + 1];
-        IntStream.rangeClosed(0, size).sequential().forEach(i -> {
+        IntStream.rangeClosed(0, size).parallel().forEach(i -> {
             Double translated = ParametrizationHelper.getInstance().translate(i, size);
             newPoints[i] = countValue(translated, ps, rational);
         });

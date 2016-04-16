@@ -12,6 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
+ *
  * Created by Albert on 12.03.2016.
  */
 @XmlRootElement(name = "Curve")
@@ -73,7 +74,7 @@ public abstract class Curve implements ICurve {
     @Override
     public void drawConvexHull(Graphics g) {
         g.setColor(Color.ORANGE);
-        if (getConvexHull().size()>3){
+        if (getConvexHull().size() > 2) {
             g.drawLine(getConvexHull().get(0).getX(),//
                     getConvexHull().get(0).getY(),
                     getConvexHull().get(getConvexHull().size()-1).getX(),

@@ -4,17 +4,30 @@ import model.Curve;
 import model.ICurve;
 import model.viewModel.MainWindowModel;
 
+import javax.swing.*;
 import java.awt.*;
 
 /**
+ *
  * Created by Albert on 03.04.2016.
  */
-public class CustomCanvas extends Canvas {
+class CustomCanvas extends JPanel {
 
 
     private final MainWindowModel model;
 
-    public CustomCanvas(MainWindowModel model) {
+    private long lastRepaint = System.currentTimeMillis();
+
+
+    long getTimeBeetwenRepaints() {
+        long now = System.currentTimeMillis();
+        long diff = now - lastRepaint;
+        lastRepaint = now;
+        return diff;
+
+    }
+
+    CustomCanvas(MainWindowModel model) {
         this.model = model;
     }
 
@@ -33,7 +46,7 @@ public class CustomCanvas extends Canvas {
         }
     }
 
-    public void exportPaint(Graphics g) {
+    void exportPaint(Graphics g) {
         super.paint(g);
         if (model.getBackground() != null) {
             int x = (getWidth() - model.getBackground().getWidth()) / 2;

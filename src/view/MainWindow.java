@@ -21,6 +21,7 @@ import java.io.IOException;
  */
 
 /**
+ *
  * Created by Albert on 12.03.2016.
  */
 public class MainWindow extends JFrame {
@@ -71,35 +72,19 @@ public class MainWindow extends JFrame {
         this.setMaximumSize(new Dimension(800, 800));
         this.setSize(new Dimension(800, 800));
 
-        model.getWeighModel().addChangeListener(e -> {
-            controller.handlePointSpinnerChange();
-        });
+        model.getWeighModel().addChangeListener(e -> controller.handlePointSpinnerChange());
 
-        model.getxModel().addChangeListener(e -> {
-            controller.handlePointSpinnerChange();
-        });
+        model.getxModel().addChangeListener(e -> controller.handlePointSpinnerChange());
 
-        model.getyModel().addChangeListener(e -> {
-            controller.handlePointSpinnerChange();
-        });
+        model.getyModel().addChangeListener(e -> controller.handlePointSpinnerChange());
 
         pointComboBox.addItemListener(e -> controller.handlePointChange());
 
-        addCurve.addActionListener(e -> {
-            controller.handleAddCurve();
-        });
-        deleteCurve.addActionListener(e -> {
-            controller.handleRemoveCurve();
-        });
-        curveComboBox.addItemListener(e -> {
-            controller.handleCurveChange();
-        });
-        deletePointButton.addActionListener(e -> {
-            controller.handleRemovePointFromCurve();
-        });
-        curveColorComboBox.addItemListener(e -> {
-            controller.handleColorChange();
-        });
+        addCurve.addActionListener(e -> controller.handleAddCurve());
+        deleteCurve.addActionListener(e -> controller.handleRemoveCurve());
+        curveComboBox.addItemListener(e -> controller.handleCurveChange());
+        deletePointButton.addActionListener(e -> controller.handleRemovePointFromCurve());
+        curveColorComboBox.addItemListener(e -> controller.handleColorChange());
         loadBackgroudButton.addActionListener(new ActionListener() {
             JFileChooser fc = new JFileChooser(FileSystemView.getFileSystemView());
 
@@ -118,9 +103,7 @@ public class MainWindow extends JFrame {
 
             }
         });
-        clearBackgroud.addActionListener(e -> {
-            model.setBackground(null);
-        });
+        clearBackgroud.addActionListener(e -> model.setBackground(null));
         saveAsJpgButton.addActionListener(new ActionListener() {
             JFileChooser fc = new JFileChooser(FileSystemView.getFileSystemView());
 
@@ -145,19 +128,16 @@ public class MainWindow extends JFrame {
             }
         });
 
-        convexHull.addChangeListener(e -> {
-            model.isDirty().compareAndSet(false, true);
-        });
-        this.createBufferStrategy(2);
+        convexHull.addChangeListener(e -> model.isDirty().compareAndSet(false, true));
 
     }
 
     private void initCanvas() {
         canvasPanel.setMinimumSize(new Dimension(800, 800));
-        Timer timer = new Timer(20, e -> {
+        Timer timer = new Timer(100, e -> {
             if (model.isDirty().compareAndSet(true,false)){
                 canvas.repaint();
-                System.out.println("REPAINT!");
+                System.out.printf("REPAINT! %d%n", canvas.getTimeBeetwenRepaints());
             }
         });
         timer.setDelay(50);
@@ -170,7 +150,7 @@ public class MainWindow extends JFrame {
         canvas.addMouseListener(canvasListener);
         canvas.addKeyListener(canvasListener);
         canvas.addMouseMotionListener(canvasListener);
-
+        canvas.setDoubleBuffered(true);
         canvasPanel.add(canvas);
     }
 }
