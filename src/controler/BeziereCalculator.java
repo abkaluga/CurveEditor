@@ -9,7 +9,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.IntStream;
 
 /**
- *
  * Created by Albert on 16.04.2016.
  */
 class BeziereCalculator implements ICalculator {
