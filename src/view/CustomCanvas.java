@@ -21,7 +21,7 @@ public class CustomCanvas extends Canvas {
     @Override
     public void paint(Graphics g) {
         exportPaint(g);
-        if (model.getConvexHullModel().isPressed()) {
+        if (model.getConvexHullModel().isSelected()) {
             ICurve selected = (ICurve) model.getCurveModel().getSelectedItem();
             if (selected != null) {
                 selected.drawConvexHull(g);

@@ -32,7 +32,7 @@ public  class ConvexHullCalculator implements ICalculator{
     public void calculate(ICurve curve) {
 
 
-        List<IPoint> points = curve.getPoints();
+        List<IPoint> points = new ArrayList<>(curve.getPoints());
         List<IPoint> convexHull = Collections.emptyList();
         if (points.size() < 3){
             convexHull = new ArrayList<>(points);
@@ -92,7 +92,6 @@ public  class ConvexHullCalculator implements ICalculator{
             IPoint p = set.get(0);
             set.remove(p);
             hull.add(insertPosition, p);
-            System.out.println(insertPosition+" "+p);
             return;
         }
         int dist = Integer.MIN_VALUE;
