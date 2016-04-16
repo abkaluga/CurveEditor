@@ -2,6 +2,7 @@ package view;
 
 import controler.CanvasListener;
 import controler.MainWindowController;
+import controler.XmlHelper;
 import model.ICurve;
 import model.IPoint;
 import model.viewModel.MainWindowModel;
@@ -127,6 +128,35 @@ public class MainWindow extends JFrame {
 
         convexHull.addChangeListener(e -> model.isDirty().compareAndSet(false, true));
 
+        saveButton.addActionListener(new ActionListener() {
+            JFileChooser fc = new JFileChooser(FileSystemView.getFileSystemView());
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                fc.setMultiSelectionEnabled(false);
+                fc.addChoosableFileFilter(new ImageFilter());
+                int ret = fc.showOpenDialog(MainWindow.this);
+                if (ret == JFileChooser.APPROVE_OPTION) {
+                    XmlHelper.getInstance().marshal(fc.getSelectedFile(), model);
+                }
+
+            }
+        });
+
+        loadButton.addActionListener(new ActionListener() {
+            JFileChooser fc = new JFileChooser(FileSystemView.getFileSystemView());
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                fc.setMultiSelectionEnabled(false);
+                fc.addChoosableFileFilter(new ImageFilter());
+                int ret = fc.showOpenDialog(MainWindow.this);
+                if (ret == JFileChooser.APPROVE_OPTION) {
+                    XmlHelper.getInstance().unmarshal(fc.getSelectedFile(), model);
+                }
+
+            }
+        });
     }
 
     private void initCanvas() {

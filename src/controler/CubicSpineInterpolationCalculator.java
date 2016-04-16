@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /**
  * Created by Albert on 16.04.2016.
  */
-public class CubicSpineInterpolationCalculator implements ICalculator {
+class CubicSpineInterpolationCalculator implements ICalculator {
 
     private static final ICalculator anInstance = new CubicSpineInterpolationCalculator();
     private static ExecutorService executor = Executors.newFixedThreadPool(2);

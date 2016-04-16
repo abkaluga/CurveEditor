@@ -8,6 +8,8 @@ import java.util.List;
  */
 public interface ICurve {
 
+    CurveType getType();
+
     String getName();
 
     void setName(String name);

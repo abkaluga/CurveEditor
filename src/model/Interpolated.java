@@ -1,6 +1,5 @@
 package model;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,9 +7,7 @@ import java.util.List;
 /**
  * Created by Albert on 02.04.2016.
  */
-@XmlRootElement(name = "Interpolated")
 abstract public class Interpolated extends Curve implements ICurve {
-
 
     private List<IPoint> interpolatedPoints = new ArrayList<>();
 

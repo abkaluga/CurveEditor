@@ -20,7 +20,7 @@ import java.util.stream.IntStream;
 /**
  * Created by Albert on 02.04.2016.
  */
-public class NewtonInterpolationCalculator implements ICalculator {
+class NewtonInterpolationCalculator implements ICalculator {
 
     private static final ICalculator anInstance = new NewtonInterpolationCalculator();
     private static ExecutorService executor = CurveUpdater.executor;

@@ -11,6 +11,11 @@ public class BeziereCurve extends Interpolated {
 
 
     @Override
+    public CurveType getType() {
+        return CurveType.Beziere;
+    }
+
+    @Override
     public void drawExtras(Graphics g) {
         Color tempColor = new Color(getColor().getRed(), getColor().getGreen(), getColor().getBlue(), 100);
         g.setColor(tempColor);

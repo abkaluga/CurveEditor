@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /**
  * Created by Albert on 12.03.2016.
  */
-public class ConvexHullCalculator implements ICalculator {
+class ConvexHullCalculator implements ICalculator {
 
     private static final ICalculator anInstance = new ConvexHullCalculator();
 
@@ -98,7 +98,7 @@ public class ConvexHullCalculator implements ICalculator {
         set.remove(furthestPoint);
         hull.add(insertPosition, P);
 
-        List<IPoint> leftSetAP = new ArrayList<IPoint>();
+        List<IPoint> leftSetAP = new ArrayList<>();
         ArrayList<IPoint> leftSetPB = new ArrayList<>();
         for (IPoint M : set) {
             if (pointLocation(A, P, M) == 1) {

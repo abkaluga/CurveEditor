@@ -1,5 +1,6 @@
 package model;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.awt.*;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -8,6 +9,11 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class RationalBeziereCurve extends Interpolated {
     public static final AtomicLong count = new AtomicLong(1);
+
+    @Override
+    public CurveType getType() {
+        return CurveType.RationalBeziere;
+    }
 
     @Override
     public void drawExtras(Graphics g) {

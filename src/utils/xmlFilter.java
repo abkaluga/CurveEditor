@@ -5,21 +5,24 @@ import java.io.File;
 import java.util.Arrays;
 
 /**
- * Created by Albert on 20.03.2016.
+ * Created by Albert on 16.04.2016.
  */
-public class ImageFilter extends FileFilter {
+
+public class XmlFilter extends FileFilter {
+
+
     @Override
     public boolean accept(File f) {
         if (f.isDirectory()) {
             return true;
         }
-        String[] accepted = {"bmp", "jpeg", "jpg", "gif", "tiff", "tif", "png"};
+        String[] accepted = {"xml"};
         String ext = FilterHelper.getInstance().getExtension(f);
         return Arrays.asList(accepted).contains(ext);
     }
 
     @Override
     public String getDescription() {
-        return "Image filter";
+        return "Xml filter";
     }
 }
