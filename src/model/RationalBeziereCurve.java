@@ -11,7 +11,8 @@ public class RationalBeziereCurve extends Interpolated {
     public static final AtomicLong count = new AtomicLong(1);
 
     @Override
-    public void draw(Graphics g) {
+    public void drawExtras(Graphics g) {
+        super.drawExtras(g);
         Color tempColor = new Color(getColor().getRed(), getColor().getGreen(), getColor().getBlue(), 100);
         g.setColor(tempColor);
         for (int i = 0; i < getPoints().size() - 1; ++i) {
@@ -21,6 +22,6 @@ public class RationalBeziereCurve extends Interpolated {
                     getPoints().get(i + 1).getX(),
                     getPoints().get(i + 1).getY());
         }
-        super.draw(g);
+
     }
 }

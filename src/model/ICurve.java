@@ -31,5 +31,5 @@ public interface ICurve {
 
     void draw(Graphics g);
 
-    void drawConvexHull(Graphics g);
+    void drawExtras(Graphics g);
 }
