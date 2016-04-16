@@ -7,7 +7,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- *
  * Created by Albert on 02.04.2016.
  */
 class CurveUpdater {

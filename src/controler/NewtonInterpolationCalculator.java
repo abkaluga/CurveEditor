@@ -1,10 +1,18 @@
 package controler;
 
-import model.*;
+import model.ICurve;
+import model.IPoint;
+import model.NewtonInterpolated;
+import model.Point;
 import utils.ParametrizationHelper;
 
-import java.util.*;
-import java.util.concurrent.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.DoubleAdder;
 import java.util.stream.IntStream;
@@ -14,9 +22,8 @@ import java.util.stream.IntStream;
  */
 public class NewtonInterpolationCalculator implements ICalculator {
 
-    private static ExecutorService executor = CurveUpdater.executor;
-
     private static final ICalculator anInstance = new NewtonInterpolationCalculator();
+    private static ExecutorService executor = CurveUpdater.executor;
 
     private NewtonInterpolationCalculator() {
 

@@ -11,9 +11,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class CubicSpineInterpolationCalculator implements ICalculator {
 
-    private static ExecutorService executor = Executors.newFixedThreadPool(2);
-
     private static final ICalculator anInstance = new CubicSpineInterpolationCalculator();
+    private static ExecutorService executor = Executors.newFixedThreadPool(2);
 
     private CubicSpineInterpolationCalculator() {
 

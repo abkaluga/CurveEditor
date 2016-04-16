@@ -2,8 +2,8 @@ package controler;
 
 import model.*;
 import model.Point;
-import utils.NameGenerator;
 import model.viewModel.MainWindowModel;
+import utils.NameGenerator;
 
 import java.awt.*;
 import java.util.List;
@@ -32,10 +32,10 @@ public class MainWindowController {
             points.add(point);
             model.getPointModel().addElement(point);
             model.getPointModel().setSelectedItem(point);
-           // handlePointChange();
+            // handlePointChange();
             curve.setPoints(points);
             CurveUpdater.update((ICurve) model.getCurveModel().getSelectedItem(), model.isDirty());
-            model.isDirty().compareAndSet(false,true);
+            model.isDirty().compareAndSet(false, true);
         }
 
     }
@@ -50,7 +50,7 @@ public class MainWindowController {
                 model.getPointModel().addElement(p);
             }
         }
-        model.isDirty().compareAndSet(false,true);
+        model.isDirty().compareAndSet(false, true);
     }
 
     public void handleRemovePointFromCurve() {
@@ -62,7 +62,7 @@ public class MainWindowController {
         model.getPointModel().removeElement(point);
         curve.setPoints(points);
         CurveUpdater.update((ICurve) model.getCurveModel().getSelectedItem(), model.isDirty());
-        model.isDirty().compareAndSet(false,true);
+        model.isDirty().compareAndSet(false, true);
 
     }
 
@@ -106,12 +106,12 @@ public class MainWindowController {
         ICurve curve = (ICurve) model.getCurveModel().getSelectedItem();
         Color color = (Color) model.getColorModel().getSelectedItem();
         curve.setColor(color);
-        model.isDirty().compareAndSet(false,true);
+        model.isDirty().compareAndSet(false, true);
     }
 
-    public void handlePointChange(){
+    public void handlePointChange() {
         IPoint p = (IPoint) model.getPointModel().getSelectedItem();
-        if (p!=null && model.getLockSpinners().tryAcquire()){
+        if (p != null && model.getLockSpinners().tryAcquire()) {
             model.getxModel().setValue(p.getX());
             model.getyModel().setValue(p.getY());
 
@@ -122,11 +122,11 @@ public class MainWindowController {
 
     public void handlePointSpinnerChange() {
         IPoint point = (IPoint) model.getPointModel().getSelectedItem();
-        if (point!=null && model.getLockSpinners().tryAcquire()){
+        if (point != null && model.getLockSpinners().tryAcquire()) {
             point.setX(model.getxModel().getNumber().intValue());
             point.setY(model.getyModel().getNumber().intValue());
             point.setWeigh(model.getWeighModel().getNumber().floatValue());
-            model.isDirty().compareAndSet(false,true);
+            model.isDirty().compareAndSet(false, true);
             model.getLockSpinners().release();
             CurveUpdater.update((ICurve) model.getCurveModel().getSelectedItem(), model.isDirty());
         }

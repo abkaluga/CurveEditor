@@ -8,7 +8,6 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- *
  * Created by Albert on 03.04.2016.
  */
 class CustomCanvas extends JPanel {
@@ -19,16 +18,16 @@ class CustomCanvas extends JPanel {
     private long lastRepaint = System.currentTimeMillis();
 
 
+    CustomCanvas(MainWindowModel model) {
+        this.model = model;
+    }
+
     long getTimeBeetwenRepaints() {
         long now = System.currentTimeMillis();
         long diff = now - lastRepaint;
         lastRepaint = now;
         return diff;
 
-    }
-
-    CustomCanvas(MainWindowModel model) {
-        this.model = model;
     }
 
     @Override

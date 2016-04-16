@@ -2,17 +2,17 @@ package view;
 
 import controler.CanvasListener;
 import controler.MainWindowController;
-import model.*;
-import utils.ImageFilter;
+import model.ICurve;
+import model.IPoint;
 import model.viewModel.MainWindowModel;
+import utils.ImageFilter;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 /*
@@ -21,10 +21,11 @@ import java.io.IOException;
  */
 
 /**
- *
  * Created by Albert on 12.03.2016.
  */
 public class MainWindow extends JFrame {
+    private final MainWindowController controller;
+    private final MainWindowModel model;
     private JPanel canvasPanel;
     private JComboBox<ICurve> curveComboBox;
     private JCheckBox editMode;
@@ -44,11 +45,7 @@ public class MainWindow extends JFrame {
     private JSpinner ySpinner;
     private JComboBox curveComboboxType;
     private JCheckBox convexHull;
-
-
     private CustomCanvas canvas;
-    private final MainWindowController controller;
-    private final MainWindowModel model;
 
 
     public MainWindow() {
@@ -135,7 +132,7 @@ public class MainWindow extends JFrame {
     private void initCanvas() {
         canvasPanel.setMinimumSize(new Dimension(800, 800));
         Timer timer = new Timer(100, e -> {
-            if (model.isDirty().compareAndSet(true,false)){
+            if (model.isDirty().compareAndSet(true, false)) {
                 canvas.repaint();
                 System.out.printf("REPAINT! %d%n", canvas.getTimeBeetwenRepaints());
             }

@@ -6,7 +6,7 @@ import model.IPoint;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.*;
+import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -22,13 +22,12 @@ public class MainWindowModel {
     private final DefaultComboBoxModel<ICurve> curveModel = new DefaultComboBoxModel<>();
     private final DefaultComboBoxModel<IPoint> pointModel = new DefaultComboBoxModel<>();
     private final Set<IPoint> selectedPoints = new ConcurrentSkipListSet<>();
-    private BufferedImage background;
     private final JToggleButton.ToggleButtonModel editModeButton = new JToggleButton.ToggleButtonModel();
     private final JToggleButton.ToggleButtonModel convexHullModel = new JToggleButton.ToggleButtonModel();
-
     private final AtomicBoolean dirty = new AtomicBoolean(true);
     private final Semaphore lockSpinners = new Semaphore(1, true);
     private final DefaultComboBoxModel<ICurve.CurveType> curveTypeModel = new DefaultComboBoxModel<>(ICurve.CurveType.values());
+    private BufferedImage background;
 
 
     public MainWindowModel() {

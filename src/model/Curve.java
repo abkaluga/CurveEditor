@@ -3,16 +3,10 @@ package model;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.awt.*;
-import java.awt.geom.Point2D;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
- *
  * Created by Albert on 12.03.2016.
  */
 @XmlRootElement(name = "Curve")
@@ -23,13 +17,14 @@ public abstract class Curve implements ICurve {
     @XmlElement
     private Color color;
     @XmlElement
-    private List<IPoint> points =   new ArrayList<>();
+    private List<IPoint> points = new ArrayList<>();
     private List<IPoint> convexHull = new ArrayList<>();
 
     @Override
     public String getName() {
         return name;
     }
+
     @Override
     public void setName(String name) {
         this.name = name;
@@ -67,7 +62,7 @@ public abstract class Curve implements ICurve {
     }
 
 
-    public String toString(){
+    public String toString() {
         return getName();
     }
 
@@ -77,14 +72,14 @@ public abstract class Curve implements ICurve {
         if (getConvexHull().size() > 2) {
             g.drawLine(getConvexHull().get(0).getX(),//
                     getConvexHull().get(0).getY(),
-                    getConvexHull().get(getConvexHull().size()-1).getX(),
-                    getConvexHull().get(getConvexHull().size()-1).getY());
-            for (int i = 0; i< getConvexHull().size()-1; ++i){
-                g.translate(0,0);
+                    getConvexHull().get(getConvexHull().size() - 1).getX(),
+                    getConvexHull().get(getConvexHull().size() - 1).getY());
+            for (int i = 0; i < getConvexHull().size() - 1; ++i) {
+                g.translate(0, 0);
                 g.drawLine(getConvexHull().get(i).getX(),//
                         getConvexHull().get(i).getY(),
-                        getConvexHull().get(i+1).getX(),
-                        getConvexHull().get(i+1).getY());
+                        getConvexHull().get(i + 1).getX(),
+                        getConvexHull().get(i + 1).getY());
             }
         }
 

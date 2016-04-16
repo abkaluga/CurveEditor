@@ -15,12 +15,12 @@ public class PolygonalChain extends Curve {
     @Override
     public void draw(Graphics g) {
         g.setColor(getColor());
-        for (int i=0;i<getPoints().size()-1;++i){
-            g.translate(0,0);
+        for (int i = 0; i < getPoints().size() - 1; ++i) {
+            g.translate(0, 0);
             g.drawLine(getPoints().get(i).getX(),//
                     getPoints().get(i).getY(),
-                    getPoints().get(i+1).getX(),
-                    getPoints().get(i+1).getY());
+                    getPoints().get(i + 1).getX(),
+                    getPoints().get(i + 1).getY());
         }
     }
 }

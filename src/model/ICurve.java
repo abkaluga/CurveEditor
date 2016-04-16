@@ -1,8 +1,6 @@
 package model;
 
 import java.awt.*;
-import java.awt.geom.Point2D;
-import java.beans.PropertyChangeListener;
 import java.util.List;
 
 /**
@@ -10,9 +8,6 @@ import java.util.List;
  */
 public interface ICurve {
 
-    enum CurveType {
-        Chain, NewtonInterpolated, CubicSpineInterpolated, Beziere, RationalBeziere
-    }
     String getName();
 
     void setName(String name);
@@ -32,4 +27,8 @@ public interface ICurve {
     void draw(Graphics g);
 
     void drawExtras(Graphics g);
+
+    enum CurveType {
+        Chain, NewtonInterpolated, CubicSpineInterpolated, Beziere, RationalBeziere
+    }
 }

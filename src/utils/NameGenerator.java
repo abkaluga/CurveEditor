@@ -5,14 +5,14 @@ import model.*;
 /**
  * Created by Albert on 28.03.2016.
  */
-public  class NameGenerator {
+public class NameGenerator {
 
-    private NameGenerator(){
+    private NameGenerator() {
         // Intentionally left empty
     }
 
-    public static void generateName(ICurve c){
-        if (c instanceof  PolygonalChain){
+    public static void generateName(ICurve c) {
+        if (c instanceof PolygonalChain) {
             c.setName(String.format("PolygonalChain #%d", PolygonalChain.count.getAndIncrement()));
             return;
         }

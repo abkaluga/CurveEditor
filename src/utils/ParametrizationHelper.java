@@ -11,19 +11,19 @@ import java.util.stream.IntStream;
  */
 public class ParametrizationHelper {
 
-    private ParametrizationHelper(){
+    private static final ParametrizationHelper anInstance = new ParametrizationHelper();
+
+    private ParametrizationHelper() {
 
     }
 
-    private static final ParametrizationHelper anInstance = new ParametrizationHelper();
-
-    public static ParametrizationHelper getInstance(){
+    public static ParametrizationHelper getInstance() {
         return anInstance;
     }
 
-    public List<Double> createParametrization(int size){
+    public List<Double> createParametrization(int size) {
         Double table[] = new Double[size];
-        IntStream.range(0,size).parallel()
+        IntStream.range(0, size).parallel()
                 .forEach(i -> table[i] = translate(i * 1000, (size - 1) * 1000));
         return new ArrayList<>(Arrays.asList(table));
     }

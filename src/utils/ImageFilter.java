@@ -17,17 +17,18 @@ public class ImageFilter extends FileFilter {
         String s = f.getName();
         int i = s.lastIndexOf('.');
 
-        if (i > 0 &&  i < s.length() - 1) {
-            ext = s.substring(i+1).toLowerCase();
+        if (i > 0 && i < s.length() - 1) {
+            ext = s.substring(i + 1).toLowerCase();
         }
         return ext;
     }
+
     @Override
     public boolean accept(File f) {
-        if (f.isDirectory()){
-            return  true;
+        if (f.isDirectory()) {
+            return true;
         }
-        String[] accepted = {"bmp","jpeg", "jpg","gif","tiff","tif","png"};
+        String[] accepted = {"bmp", "jpeg", "jpg", "gif", "tiff", "tif", "png"};
         String ext = getExtension(f);
         return Arrays.asList(accepted).contains(ext);
     }

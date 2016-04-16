@@ -9,7 +9,7 @@ public class Point implements IPoint, Comparable<IPoint> {
 
     private int x;
     private int y;
-    private float weigh =1;
+    private float weigh = 1;
     private Color color = Color.black;
 
     @Override
@@ -18,18 +18,18 @@ public class Point implements IPoint, Comparable<IPoint> {
     }
 
     @Override
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    @Override
     public int getY() {
         return y;
     }
 
     @Override
-    public void setX(int x) {
-        this.x=x;
-    }
-
-    @Override
     public void setY(int y) {
-        this.y=y;
+        this.y = y;
     }
 
     public float getWeigh() {
@@ -37,7 +37,7 @@ public class Point implements IPoint, Comparable<IPoint> {
     }
 
     public void setWeigh(float weigh) {
-            this.weigh = weigh;
+        this.weigh = weigh;
     }
 
     @Override
@@ -58,16 +58,16 @@ public class Point implements IPoint, Comparable<IPoint> {
 
     @Override
     public int compareTo(IPoint o) {
-        if (getX()!=o.getX()){
+        if (getX() != o.getX()) {
             return Integer.compare(getY(), o.getY());
         } else {
-            return  Integer.compare(getX(), o.getX());
+            return Integer.compare(getX(), o.getX());
         }
     }
 
     @Override
     public String toString() {
-        return "[ "+getX()+" , "+getY()+"]";
+        return "[ " + getX() + " , " + getY() + "]";
     }
 }
 
