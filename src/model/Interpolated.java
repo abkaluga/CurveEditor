@@ -10,10 +10,9 @@ import java.util.concurrent.atomic.AtomicLong;
  * Created by Albert on 02.04.2016.
  */
 @XmlRootElement(name = "Interpolated")
-public class Interpolated extends  Curve implements ICurve {
+abstract public class Interpolated extends Curve implements ICurve {
 
 
-    public static final AtomicLong count = new AtomicLong(1);
     private List<IPoint> interpolatedPoints =   new ArrayList<>();
 
 

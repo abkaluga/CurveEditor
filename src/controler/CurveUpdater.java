@@ -26,12 +26,12 @@ class CurveUpdater {
 
 
     private static void update(PolygonalChain curve){
-        //ConvexHullCalculator.getAnInstance().calculate(curve);
+        ConvexHullCalculator.getAnInstance().calculate(curve);
     }
 
 
     private static void update(Interpolated curve){
-       // ConvexHullCalculator.getAnInstance().calculate(curve);
+        ConvexHullCalculator.getAnInstance().calculate(curve);
         NewtonInterpolationCalculator.getAnInstance().calculate(curve);
     }
 }

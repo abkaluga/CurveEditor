@@ -67,13 +67,19 @@ public class MainWindowController {
     }
 
     public void handleAddCurve() {
-        ICurve curve;
+        ICurve curve = null;
         ICurve.CurveType type = (ICurve.CurveType) model.getCurveTypeModel().getSelectedItem();
 
-        if (ICurve.CurveType.Interpolated.equals(type)) {
-            curve = new Interpolated();
-        } else {
-            curve = new PolygonalChain();
+        switch (type) {
+            case NewtonInterpolated:
+                curve = new NewtonInterpolated();
+                break;
+            case Chain:
+                curve = new PolygonalChain();
+                break;
+            case CubicSpineInterpolated:
+                curve = new CubicSpineInterpolated();
+                break;
         }
 
 

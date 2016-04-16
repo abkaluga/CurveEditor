@@ -1,8 +1,6 @@
 package utils;
 
-import model.ICurve;
-import model.Interpolated;
-import model.PolygonalChain;
+import model.*;
 
 /**
  * Created by Albert on 28.03.2016.
@@ -18,8 +16,13 @@ public  class NameGenerator {
             c.setName("PolygonalChain #"+PolygonalChain.count.getAndIncrement());
             return;
         }
-        if (c instanceof Interpolated){
-            c.setName("Interpolated #"+Interpolated.count.getAndIncrement());
+        if (c instanceof NewtonInterpolated) {
+            c.setName("Interpolated #" + NewtonInterpolated.count.getAndIncrement());
+            return;
+        }
+
+        if (c instanceof CubicSpineInterpolated) {
+            c.setName("Cubic spine #" + CubicSpineInterpolated.count.getAndIncrement());
             return;
         }
 

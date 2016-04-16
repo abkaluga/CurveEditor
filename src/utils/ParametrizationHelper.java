@@ -1,5 +1,6 @@
 package utils;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,13 +24,15 @@ public class ParametrizationHelper {
     public List<Double> createParametrization(int size){
         Double table[] = new Double[size];
         IntStream.range(0,size).parallel()
-                .forEach(i -> table[i] = translate(i, size));
+                .forEach(i -> table[i] = translate(i * 1000, (size - 1) * 1000));
         return new ArrayList<>(Arrays.asList(table));
     }
 
 
     public Double translate(int i, int size) {
-        return (double) i / (double) (size - 1);
+        BigDecimal result = new BigDecimal((double) i / (double) (size));
+        result.setScale(4, BigDecimal.ROUND_HALF_UP);
+        return Double.valueOf(result.toString());
     }
 
 

@@ -1,13 +1,11 @@
 package controler;
 
-import model.ICurve;
-import model.IPoint;
-import model.Interpolated;
-import model.Point;
+import model.*;
 import utils.ParametrizationHelper;
 
 import java.util.*;
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.DoubleAdder;
 import java.util.stream.IntStream;
 
 /**
@@ -29,8 +27,8 @@ public class NewtonInterpolationCalculator implements ICalculator {
 
     @Override
     public void calculate(ICurve curve) {
-        if (curve instanceof Interpolated) {
-            Interpolated interpolated = (Interpolated) curve;
+        if (curve instanceof NewtonInterpolated) {
+            NewtonInterpolated interpolated = (NewtonInterpolated) curve;
             List<Double> xs = new ArrayList<>();
             List<Double> ys = new ArrayList<>();
             List<Double> px = ParametrizationHelper.getInstance().createParametrization(curve.getPoints().size());
@@ -49,8 +47,8 @@ public class NewtonInterpolationCalculator implements ICalculator {
                 IPoint p = new Point();
                 try {
                     Double translated = ParametrizationHelper.getInstance().translate(i, size);
-                    p.setX((int) countValue(translated, xDiff.get(), px));
-                    p.setY((int) countValue(translated, yDiff.get(), px));
+                    p.setX((countValue(translated, xDiff.get(), px)));
+                    p.setY((countValue(translated, yDiff.get(), px)));
 
                 } catch (InterruptedException | ExecutionException e) {
                     e.printStackTrace();
@@ -74,16 +72,16 @@ public class NewtonInterpolationCalculator implements ICalculator {
         return Arrays.asList(d);
     }
 
-    private double countValue(Double x, List<Double> d, List<Double> parameters) {
-        double mult, sum = 0;
-        for (int i = 0; i < d.size(); ++i) {
-            mult = 1;
+    private int countValue(Double x, List<Double> d, List<Double> parameters) {
+        DoubleAdder sum = new DoubleAdder();
+        IntStream.range(0, d.size()).mapToDouble(i -> {
+            double m = 1;
             for (int j = 0; j < i; ++j)
                 // Wasted over 3h because write i instead of j
-                mult *= (x - parameters.get(j));
-            mult *= d.get(i);
-            sum += mult;
-        }
-        return sum;
+                m *= (x - parameters.get(j));
+            m *= d.get(i);
+            return m;
+        }).parallel().forEach(sum::add);
+        return Math.round(sum.floatValue());
     }
 }

@@ -72,7 +72,7 @@ public abstract class Curve implements ICurve {
 
     @Override
     public void drawConvexHull(Graphics g) {
-        g.setColor(Color.DARK_GRAY);
+        g.setColor(Color.ORANGE);
         if (getConvexHull().size()>3){
             g.drawLine(getConvexHull().get(0).getX(),//
                     getConvexHull().get(0).getY(),
