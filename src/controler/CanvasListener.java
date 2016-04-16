@@ -1,10 +1,10 @@
 package controler;
 
-import model.*;
+import model.ICurve;
+import model.IPoint;
 import model.viewModel.MainWindowModel;
 
 import java.awt.*;
-import java.awt.Point;
 import java.awt.event.*;
 
 /**
@@ -44,7 +44,7 @@ public class CanvasListener implements MouseListener, KeyListener, MouseMotionLi
                             p.setColor(Color.GREEN);
                             model.getSelectedPoints().add(p);
                         }
-                        model.isDirty().compareAndSet(false,true);
+                        model.isDirty().compareAndSet(false, true);
                         break;
                     }
                 }
@@ -68,10 +68,10 @@ public class CanvasListener implements MouseListener, KeyListener, MouseMotionLi
         if (model.getEditModeButton().isSelected()) {
             model.getSelectedPoints().parallelStream()
                     .forEach(p -> {
-                        p.setX(p.getX()+deltaX);
-                        p.setY(p.getY()+deltaY);
-                        });
-            model.isDirty().compareAndSet(false,true);
+                        p.setX(p.getX() + deltaX);
+                        p.setY(p.getY() + deltaY);
+                    });
+            model.isDirty().compareAndSet(false, true);
             CurveUpdater.update((ICurve) model.getCurveModel().getSelectedItem(), model.isDirty());
         }
     }
