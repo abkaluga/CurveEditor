@@ -33,15 +33,12 @@ class CustomCanvas extends JPanel {
     @Override
     public void paint(Graphics g) {
         exportPaint(g);
+        ICurve selected = (ICurve) model.getCurveModel().getSelectedItem();
+        if (selected != null) {
+            selected.drawSelected(g);
         if (model.getConvexHullModel().isSelected()) {
-            ICurve selected = (ICurve) model.getCurveModel().getSelectedItem();
-            if (selected != null) {
-                selected.drawExtras(g);
+            selected.drawConvexHull(g);
             }
-        }
-
-        for (int i = 0; i < model.getPointModel().getSize(); ++i) {
-            model.getPointModel().getElementAt(i).draw(g);
         }
     }
 

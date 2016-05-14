@@ -1,6 +1,5 @@
 package model;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import java.awt.*;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -16,8 +15,8 @@ public class RationalBeziereCurve extends Interpolated {
     }
 
     @Override
-    public void drawExtras(Graphics g) {
-        super.drawExtras(g);
+    public void drawSelected(Graphics g) {
+        super.drawSelected(g);
         Color tempColor = new Color(getColor().getRed(), getColor().getGreen(), getColor().getBlue(), 100);
         g.setColor(tempColor);
         for (int i = 0; i < getPoints().size() - 1; ++i) {
@@ -27,6 +26,5 @@ public class RationalBeziereCurve extends Interpolated {
                     getPoints().get(i + 1).getX(),
                     getPoints().get(i + 1).getY());
         }
-
     }
 }

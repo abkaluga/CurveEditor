@@ -65,7 +65,14 @@ public abstract class Curve implements ICurve {
     }
 
     @Override
-    public void drawExtras(Graphics g) {
+    public void drawSelected(Graphics g) {
+        for (IPoint p : this.getPoints()) {
+            p.draw(g);
+        }
+    }
+
+    @Override
+    public void drawConvexHull(Graphics g) {
         g.setColor(Color.ORANGE);
         if (getConvexHull().size() > 2) {
             g.drawLine(getConvexHull().get(0).getX(),//

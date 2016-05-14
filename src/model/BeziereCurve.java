@@ -16,7 +16,8 @@ public class BeziereCurve extends Interpolated {
     }
 
     @Override
-    public void drawExtras(Graphics g) {
+    public void drawSelected(Graphics g) {
+        super.drawSelected(g);
         Color tempColor = new Color(getColor().getRed(), getColor().getGreen(), getColor().getBlue(), 100);
         g.setColor(tempColor);
         for (int i = 0; i < getPoints().size() - 1; ++i) {
@@ -26,6 +27,5 @@ public class BeziereCurve extends Interpolated {
                     getPoints().get(i + 1).getX(),
                     getPoints().get(i + 1).getY());
         }
-        super.drawExtras(g);
     }
 }

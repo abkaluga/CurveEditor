@@ -7,6 +7,7 @@ import utils.NameGenerator;
 
 import java.awt.*;
 import java.util.List;
+import java.util.stream.IntStream;
 
 /**
  * Created by Albert on 20.03.2016.
@@ -45,11 +46,7 @@ public class MainWindowController {
         model.getPointModel().removeAllElements();
         model.getSelectedPoints().parallelStream().forEach(p -> p.setColor(Color.BLACK));
         model.getSelectedPoints().clear();
-        if (curve != null) {
-            for (IPoint p : curve.getPoints()) {
-                model.getPointModel().addElement(p);
-            }
-        }
+        curve.getPoints().stream().forEach(model.getPointModel()::addElement);
         model.isDirty().compareAndSet(false, true);
     }
 

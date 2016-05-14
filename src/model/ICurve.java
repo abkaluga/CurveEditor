@@ -28,7 +28,9 @@ public interface ICurve {
 
     void draw(Graphics g);
 
-    void drawExtras(Graphics g);
+    void drawSelected(Graphics g);
+
+    void drawConvexHull(Graphics g);
 
     enum CurveType {
         Chain, NewtonInterpolated, CubicSpineInterpolated, Beziere, RationalBeziere
