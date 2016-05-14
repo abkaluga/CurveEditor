@@ -10,7 +10,6 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -57,7 +56,7 @@ public class XmlHelper {
                     p.setEncodedBackGround(Base64.getEncoder().encodeToString(baos.toByteArray()));
                     baos.close();
                 } catch (IOException e) {
-                    System.err.printf("Fail to serialize image d %s", e.getMessage());
+                    System.err.printf("Fail to serialize image %s", e.getMessage());
                 }
             }
 
@@ -99,7 +98,7 @@ public class XmlHelper {
                     model.setBackground(ImageIO.read(bais));
                     bais.close();
                 } catch (IOException e) {
-                    System.err.printf("Fail to deserialize image d %s", e.getMessage());
+                    System.err.printf("Fail to deserialize image %s", e.getMessage());
                 }
 
             }
