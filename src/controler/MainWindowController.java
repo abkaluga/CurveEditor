@@ -44,9 +44,11 @@ public class MainWindowController {
     public void handleCurveChange() {
         ICurve curve = (ICurve) model.getCurveModel().getSelectedItem();
         model.getPointModel().removeAllElements();
+        if (curve != null) {
+            curve.getPoints().stream().forEach(model.getPointModel()::addElement);
+        }
         model.getSelectedPoints().parallelStream().forEach(p -> p.setColor(Color.BLACK));
         model.getSelectedPoints().clear();
-        curve.getPoints().stream().forEach(model.getPointModel()::addElement);
         model.isDirty().compareAndSet(false, true);
     }
 

@@ -28,7 +28,7 @@ public class CurveDTO {
         CurveDTO dto = new CurveDTO();
         dto.setName(c.getName());
         dto.setColor(c.getColor().getRGB());
-        dto.getPoints().addAll(c.getPoints().stream().map(PointDTO::toDTO).collect(Collectors.toList()));
+        dto.setPoints(c.getPoints().stream().map(PointDTO::toDTO).collect(Collectors.toList()));
         dto.setType(c.getType());
         return dto;
     }
