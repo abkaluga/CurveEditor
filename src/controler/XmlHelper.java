@@ -1,15 +1,22 @@
 package controler;
 
+import com.sun.org.apache.xerces.internal.jaxp.validation.XMLSchemaFactory;
 import model.*;
 import model.dtoModel.CurveDTO;
 import model.dtoModel.Project;
 import model.viewModel.MainWindowModel;
+import org.xml.sax.SAXException;
 
 import javax.imageio.ImageIO;
+import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -29,6 +36,9 @@ public class XmlHelper {
     private XmlHelper() {
 
     }
+
+    SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+
 
     public static XmlHelper getInstance() {
         return instance;
@@ -80,6 +90,9 @@ public class XmlHelper {
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(Project.class);
             Unmarshaller jaxbMarshaller = jaxbContext.createUnmarshaller();
+            Schema schema = factory.newSchema(new File("src\\model\\dtoModel\\schema1.xsd"));
+            Validator validator = schema.newValidator();
+            validator.validate(new StreamSource(f));
             Project p = (Project) jaxbMarshaller.unmarshal(f);
             model.getCurveModel().removeAllElements();
             BeziereCurve.count.set(p.getBeziereCounter());
@@ -103,8 +116,8 @@ public class XmlHelper {
 
             }
             model.isDirty().compareAndSet(false, true);
-        } catch (JAXBException e) {
-            e.printStackTrace();
+        } catch (JAXBException | SAXException | IOException e) {
+            System.err.print("XML parse error " + e.getMessage());
         }
     }
 }

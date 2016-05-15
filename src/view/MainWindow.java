@@ -164,6 +164,7 @@ public class MainWindow extends JFrame {
         Timer timer = new Timer(100, e -> {
             if (model.isDirty().compareAndSet(true, false)) {
                 canvas.repaint();
+                System.gc();
                 System.out.printf("REPAINT! %d%n", canvas.getTimeBeetwenRepaints());
             }
         });

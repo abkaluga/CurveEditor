@@ -1,5 +1,6 @@
 package model.dtoModel;
 
+import com.sun.istack.internal.NotNull;
 import model.*;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -63,7 +64,7 @@ public class CurveDTO {
         return name;
     }
 
-    @XmlElement
+    @XmlElement(nillable = true, required = true)
     public void setName(String name) {
         this.name = name;
     }
@@ -72,7 +73,7 @@ public class CurveDTO {
         return color;
     }
 
-    @XmlElement
+    @XmlElement(nillable = true, required = true)
     public void setColor(int color) {
         this.color = color;
     }
@@ -81,7 +82,7 @@ public class CurveDTO {
         return type;
     }
 
-    @XmlElement
+    @XmlElement(nillable = true, required = true)
     public void setType(ICurve.CurveType type) {
         this.type = type;
     }
@@ -90,7 +91,7 @@ public class CurveDTO {
         return points;
     }
 
-    @XmlElement
+    @XmlElement(nillable = true, required = true)
     public void setPoints(List<PointDTO> points) {
         this.points = points;
     }

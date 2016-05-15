@@ -1,5 +1,6 @@
 package model.dtoModel;
 
+import com.sun.istack.internal.NotNull;
 import model.IPoint;
 import model.Point;
 
@@ -38,7 +39,7 @@ public class PointDTO {
         return x;
     }
 
-    @XmlElement
+    @XmlElement(nillable = true, required = true)
     public void setX(int x) {
         this.x = x;
     }
@@ -47,7 +48,7 @@ public class PointDTO {
         return y;
     }
 
-    @XmlElement
+    @XmlElement(nillable = true, required = true)
     public void setY(int y) {
         this.y = y;
     }
@@ -56,7 +57,7 @@ public class PointDTO {
         return weigh;
     }
 
-    @XmlElement
+    @XmlElement(nillable = true, required = true)
     public void setWeigh(float weigh) {
         this.weigh = weigh;
     }
