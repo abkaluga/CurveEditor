@@ -33,6 +33,6 @@ public interface ICurve {
     void drawConvexHull(Graphics g);
 
     enum CurveType {
-        Chain, NewtonInterpolated, CubicSpineInterpolated, Beziere, RationalBeziere
+        Chain, NewtonInterpolated, CubicSpineInterpolated, BeziereHorner, RationalBeziereHorner, BezieredeCastel, RationalBezieredeCastel
     }
 }

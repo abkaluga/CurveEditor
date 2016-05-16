@@ -2,6 +2,9 @@ package controler;
 
 import model.*;
 import model.Point;
+import model.beziere.BeziereHornerCurve;
+import model.beziere.BezieredeCastelCurve;
+import model.beziere.RationalBeziereHornerCurve;
 import model.viewModel.MainWindowModel;
 import utils.NameGenerator;
 
@@ -10,11 +13,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.IntStream;
-
-import static model.ICurve.CurveType.Beziere;
-import static model.ICurve.CurveType.Chain;
-import static model.ICurve.CurveType.RationalBeziere;
 
 /**
  * Created by Albert on 20.03.2016.
@@ -36,11 +34,10 @@ public class MainWindowController {
             point.setX(model.getxModel().getNumber().intValue());
             point.setY(model.getyModel().getNumber().intValue());
 
-            List<IPoint> points = curve.getPoints();
+            List<IPoint> points = new ArrayList<>(curve.getPoints());
             points.add(point);
             model.getPointModel().addElement(point);
             model.getPointModel().setSelectedItem(point);
-            // handlePointChange();
             curve.setPoints(points);
             CurveUpdater.update((ICurve) model.getCurveModel().getSelectedItem(), model.isDirty());
             model.isDirty().compareAndSet(false, true);
@@ -63,7 +60,7 @@ public class MainWindowController {
         ICurve curve = (ICurve) model.getCurveModel().getSelectedItem();
         IPoint point = (IPoint) model.getPointModel().getSelectedItem();
 
-        List<IPoint> points = curve.getPoints();
+        List<IPoint> points = new ArrayList<>(curve.getPoints());
         points.remove(point);
         model.getPointModel().removeElement(point);
         curve.setPoints(points);
@@ -95,15 +92,19 @@ public class MainWindowController {
             case CubicSpineInterpolated:
                 curve = new CubicSpineInterpolated();
                 break;
-            case Beziere:
-                curve = new BeziereCurve();
+            case BeziereHorner:
+                curve = new BeziereHornerCurve();
                 break;
-            case RationalBeziere:
-                curve = new RationalBeziereCurve();
+            case RationalBeziereHorner:
+                curve = new RationalBeziereHornerCurve();
+                break;
+            case BezieredeCastel:
+                curve = new BezieredeCastelCurve();
+                break;
+            case RationalBezieredeCastel:
+                curve = new RationalBeziereHornerCurve();
                 break;
         }
-
-
         curve.setColor(color);
         if (name.isPresent()) {
             curve.setName(name.get());

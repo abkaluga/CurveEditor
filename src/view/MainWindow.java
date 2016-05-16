@@ -2,7 +2,7 @@ package view;
 
 import controler.CanvasListener;
 import controler.MainWindowController;
-import controler.XmlHelper;
+import utils.XmlHelper;
 import model.ICurve;
 import model.IPoint;
 import model.viewModel.MainWindowModel;

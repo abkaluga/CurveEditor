@@ -1,6 +1,8 @@
 package utils;
 
 import model.*;
+import model.beziere.BeziereHornerCurve;
+import model.beziere.RationalBeziereHornerCurve;
 
 /**
  * Created by Albert on 28.03.2016.
@@ -25,12 +27,12 @@ public class NameGenerator {
             c.setName(String.format("Cubic spine #%d", CubicSpineInterpolated.count.getAndIncrement()));
             return;
         }
-        if (c instanceof BeziereCurve) {
-            c.setName(String.format("Beziere  #%d", BeziereCurve.count.getAndIncrement()));
+        if (c instanceof BeziereHornerCurve) {
+            c.setName(String.format("Beziere(Horner)  #%d", BeziereHornerCurve.count.getAndIncrement()));
             return;
         }
-        if (c instanceof RationalBeziereCurve) {
-            c.setName(String.format("Rational Beziere #%d", RationalBeziereCurve.count.getAndIncrement()));
+        if (c instanceof RationalBeziereHornerCurve) {
+            c.setName(String.format("Rational Beziere (Horner) #%d", RationalBeziereHornerCurve.count.getAndIncrement()));
             return;
         }
 

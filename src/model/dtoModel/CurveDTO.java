@@ -1,7 +1,9 @@
 package model.dtoModel;
 
-import com.sun.istack.internal.NotNull;
 import model.*;
+import model.beziere.BeziereHornerCurve;
+import model.beziere.BezieredeCastelCurve;
+import model.beziere.RationalBeziereHornerCurve;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -43,14 +45,20 @@ public class CurveDTO {
             case Chain:
                 curve = new PolygonalChain();
                 break;
-            case Beziere:
-                curve = new BeziereCurve();
+            case BeziereHorner:
+                curve = new BeziereHornerCurve();
                 break;
             case CubicSpineInterpolated:
                 curve = new CubicSpineInterpolated();
                 break;
-            case RationalBeziere:
-                curve = new RationalBeziereCurve();
+            case RationalBeziereHorner:
+                curve = new RationalBeziereHornerCurve();
+                break;
+            case BezieredeCastel:
+                curve = new BezieredeCastelCurve();
+                break;
+            case RationalBezieredeCastel:
+                curve = new RationalBeziereHornerCurve();
                 break;
         }
         curve.setColor(new Color(dto.getColor()));

@@ -1,7 +1,9 @@
-package controler;
+package utils;
 
-import com.sun.org.apache.xerces.internal.jaxp.validation.XMLSchemaFactory;
+import controler.CurveUpdater;
 import model.*;
+import model.beziere.BeziereHornerCurve;
+import model.beziere.RationalBeziereHornerCurve;
 import model.dtoModel.CurveDTO;
 import model.dtoModel.Project;
 import model.viewModel.MainWindowModel;
@@ -53,9 +55,9 @@ public class XmlHelper {
 
             Project p = new Project();
 
-            p.setBeziereCounter(BeziereCurve.count.get());
+            p.setBeziereCounter(BeziereHornerCurve.count.get());
             p.setChainCounter(PolygonalChain.count.get());
-            p.setRationalCounter(RationalBeziereCurve.count.get());
+            p.setRationalCounter(RationalBeziereHornerCurve.count.get());
             p.setInterpolatedCounter(NewtonInterpolated.count.get());
 
             if (model.getBackground() != null) {
@@ -95,9 +97,9 @@ public class XmlHelper {
             validator.validate(new StreamSource(f));
             Project p = (Project) jaxbMarshaller.unmarshal(f);
             model.getCurveModel().removeAllElements();
-            BeziereCurve.count.set(p.getBeziereCounter());
+            BeziereHornerCurve.count.set(p.getBeziereCounter());
             PolygonalChain.count.set(p.getChainCounter());
-            RationalBeziereCurve.count.set(p.getRationalCounter());
+            RationalBeziereHornerCurve.count.set(p.getRationalCounter());
             NewtonInterpolated.count.set(p.getInterpolatedCounter());
 
             for (CurveDTO curve : p.getCurves()) {

@@ -1,6 +1,9 @@
 package controler;
 
 import model.*;
+import model.beziere.BeziereCurve;
+import model.beziere.BeziereHornerCurve;
+import model.beziere.RationalBeziereHornerCurve;
 import utils.ParametrizationHelper;
 
 import java.util.Arrays;
@@ -11,11 +14,11 @@ import java.util.stream.IntStream;
 /**
  * Created by Albert on 16.04.2016.
  */
-class BeziereCalculator implements ICalculator {
+class BeziereHornerCalculator implements ICalculator {
 
-    private static final ICalculator anInstance = new BeziereCalculator();
+    private static final ICalculator anInstance = new BeziereHornerCalculator();
 
-    private BeziereCalculator() {
+    private BeziereHornerCalculator() {
 
     }
 
@@ -25,9 +28,9 @@ class BeziereCalculator implements ICalculator {
 
     @Override
     public void calculate(ICurve curve, AtomicBoolean dirtyIndicator) {
-        if (curve instanceof BeziereCurve || curve instanceof RationalBeziereCurve) {
-            Interpolated beziere = (Interpolated) curve;
-            IPoint[] newPoints = getNewPoints(beziere.getPoints(), beziere instanceof RationalBeziereCurve);
+        if (curve instanceof BeziereHornerCurve || curve instanceof RationalBeziereHornerCurve) {
+            Interpolated beziere = (BeziereCurve) curve;
+            IPoint[] newPoints = getNewPoints(beziere.getPoints(), beziere instanceof RationalBeziereHornerCurve);
             beziere.setInterpolatedPoints(Arrays.asList(newPoints));
             dirtyIndicator.compareAndSet(false, true);
         }
