@@ -23,6 +23,8 @@ class CubicSpineInterpolationCalculator implements ICalculator {
 
     private static final ICalculator anInstance = new CubicSpineInterpolationCalculator();
     private static ExecutorService executor = CurveUpdater.executor;
+    Future<List<Double>> xsF;
+    Future<List<Double>> ysF;
 
     private CubicSpineInterpolationCalculator() {
 
@@ -45,25 +47,38 @@ class CubicSpineInterpolationCalculator implements ICalculator {
                         xs.add((double) p.getX());
                         ys.add((double) p.getY());
                     });
-            Future<List<Double>> xsF = executor.submit(() -> interpolate(Collections.unmodifiableList(px), Collections.unmodifiableList(xs)));
-            Future<List<Double>> ysF = executor.submit(() -> interpolate(Collections.unmodifiableList(px), Collections.unmodifiableList(ys)));
-            int size = (px.size()) * 100;
-            IPoint newPoints[] = new IPoint[size + 1];
-            IntStream.rangeClosed(0, size).parallel().forEach(i -> {
-                newPoints[i] = new Point();
-                try {
-                    newPoints[i].setX(xsF.get().get(i).intValue());
-                    newPoints[i].setY(ysF.get().get(i).intValue());
-                } catch (InterruptedException | ExecutionException e) {
-                    e.printStackTrace();
-                }
+            if (xsF != null && !xsF.isDone()) {
+                xsF.cancel(false);
+                ysF.cancel(false);
+            }
 
-            });
+            xsF = executor.submit(() -> interpolate(Collections.unmodifiableList(px), Collections.unmodifiableList(xs)));
+            ysF = executor.submit(() -> interpolate(Collections.unmodifiableList(px), Collections.unmodifiableList(ys)));
+            int size = (px.size()) * 100;
+            IPoint[] newPoints = getNewPoints(size);
 
             interpolated.setInterpolatedPoints(Arrays.asList(newPoints));
             dirtyIndicator.compareAndSet(false, true);
         }
 
+    }
+
+    private IPoint[] getNewPoints(int size) {
+        if (xsF.isCancelled() || ysF.isCancelled()) {
+            return new IPoint[0];
+        }
+        IPoint newPoints[] = new IPoint[size + 1];
+        IntStream.rangeClosed(0, size).parallel().forEach(i -> {
+            newPoints[i] = new Point();
+            try {
+                newPoints[i].setX(xsF.get().get(i).intValue());
+                newPoints[i].setY(ysF.get().get(i).intValue());
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
+
+        });
+        return newPoints;
     }
 
 

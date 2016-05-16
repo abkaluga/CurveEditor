@@ -24,6 +24,8 @@ class NewtonInterpolationCalculator implements ICalculator {
 
     private static final ICalculator anInstance = new NewtonInterpolationCalculator();
     private static ExecutorService executor = CurveUpdater.executor;
+    Future<List<Double>> xDiff;
+    Future<List<Double>> yDiff;
 
     private NewtonInterpolationCalculator() {
 
@@ -46,26 +48,45 @@ class NewtonInterpolationCalculator implements ICalculator {
                         ys.add((double) p.getY());
                     });
 
-            Future<List<Double>> xDiff = executor.submit(() -> newtonInterpolation(Collections.unmodifiableList(px), Collections.unmodifiableList(xs)));
-            Future<List<Double>> yDiff = executor.submit(() -> newtonInterpolation(Collections.unmodifiableList(px), Collections.unmodifiableList(ys)));
+            cancelOldstartNew(xs, ys, px);
 
             int size = (xs.size() - 1) * 100;
-            IPoint newPoints[] = new IPoint[size + 1];
-            IntStream.rangeClosed(0, size).parallel().forEach(i -> {
-                IPoint p = new Point();
-                try {
-                    Double translated = ParametrizationHelper.getInstance().translate(i, size);
-                    p.setX((countValue(translated, xDiff.get(), px)));
-                    p.setY((countValue(translated, yDiff.get(), px)));
-
-                } catch (InterruptedException | ExecutionException e) {
-                    e.printStackTrace();
-                }
-                newPoints[i] = p;
-            });
+            IPoint[] newPoints = getNewPoints(px, size);
             interpolated.setInterpolatedPoints(new ArrayList<>(Arrays.asList(newPoints)));
             dirtyIndicator.compareAndSet(false, true);
         }
+    }
+
+    private void cancelOldstartNew(List<Double> xs, List<Double> ys, List<Double> px) {
+        if (xDiff != null && !xDiff.isDone()) {
+            xDiff.cancel(false);
+        }
+        if (yDiff != null && !yDiff.isDone()) {
+            yDiff.cancel(false);
+        }
+        xDiff = executor.submit(() -> newtonInterpolation(Collections.unmodifiableList(px), Collections.unmodifiableList(xs)));
+        yDiff = executor.submit(() -> newtonInterpolation(Collections.unmodifiableList(px), Collections.unmodifiableList(ys)));
+    }
+
+    private IPoint[] getNewPoints(List<Double> px, int size) {
+        if (xDiff.isCancelled() || xDiff.isCancelled()) {
+            return new IPoint[0];
+        }
+
+        IPoint newPoints[] = new IPoint[size + 1];
+        IntStream.rangeClosed(0, size).parallel().forEach(i -> {
+            IPoint p = new Point();
+            try {
+                Double translated = ParametrizationHelper.getInstance().translate(i, size);
+                p.setX((countValue(translated, xDiff.get(), px)));
+                p.setY((countValue(translated, yDiff.get(), px)));
+
+            } catch (InterruptedException | ExecutionException e) {
+                System.out.print(e.getMessage());
+            }
+            newPoints[i] = p;
+        });
+        return newPoints;
     }
 
 

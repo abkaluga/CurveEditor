@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 class CurveUpdater {
 
-    static ExecutorService executor = Executors.newCachedThreadPool();
+    static ExecutorService executor = Executors.newFixedThreadPool(4);
 
     private CurveUpdater() {
 
