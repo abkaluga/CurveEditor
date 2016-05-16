@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="Project" type="project"/>
+
+    <xs:element name="curveDTO" type="curveDTO"/>
+
+    <xs:element name="pointDTO" type="pointDTO"/>
+
+    <xs:complexType name="project">
+        <xs:sequence>
+            <xs:element name="beziereCounter" type="xs:long" minOccurs="0"/>
+            <xs:element name="chainCounter" type="xs:long" minOccurs="0"/>
+            <xs:element name="curves" type="curveDTO" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="encodedBackGround" type="xs:string" minOccurs="0"/>
+            <xs:element name="interpolatedCounter" type="xs:long" minOccurs="0"/>
+            <xs:element name="rationalCounter" type="xs:long" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="curveDTO">
+        <xs:sequence>
+            <xs:element name="color" type="xs:int" nillable="true"/>
+            <xs:element name="name" type="xs:string" nillable="true"/>
+            <xs:element name="points" type="pointDTO" nillable="true" maxOccurs="unbounded"/>
+            <xs:element name="type" type="curveType" nillable="true"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="pointDTO">
+        <xs:sequence>
+            <xs:element name="weigh" type="xs:float" nillable="true"/>
+            <xs:element name="x" type="xs:int" nillable="true"/>
+            <xs:element name="y" type="xs:int" nillable="true"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="curveType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Chain"/>
+            <xs:enumeration value="NewtonInterpolated"/>
+            <xs:enumeration value="CubicSpineInterpolated"/>
+            <xs:enumeration value="BeziereHorner"/>
+            <xs:enumeration value="RationalBeziereHorner"/>
+            <xs:enumeration value="BezieredeCastel"/>
+            <xs:enumeration value="RationalBezieredeCastel"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>
+
