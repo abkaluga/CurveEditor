@@ -104,6 +104,8 @@ public class MainWindowController {
             case RationalBezieredeCastel:
                 curve = new RationalBeziereHornerCurve();
                 break;
+            case BeziereInterpolated:
+                curve = new BeziereInterpolated();
         }
         curve.setColor(color);
         if (name.isPresent()) {
@@ -131,6 +133,7 @@ public class MainWindowController {
         model.getCurveModel().removeElement(selected);
         handleCurveChange();
     }
+
     public void handleRemoveCurve() {
         ICurve curve = (ICurve) model.getCurveModel().getSelectedItem();
         model.getCurveModel().removeElement(curve);

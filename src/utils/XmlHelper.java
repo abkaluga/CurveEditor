@@ -1,7 +1,9 @@
 package utils;
 
 import controler.CurveUpdater;
-import model.*;
+import model.ICurve;
+import model.NewtonInterpolated;
+import model.PolygonalChain;
 import model.beziere.BeziereHornerCurve;
 import model.beziere.RationalBeziereHornerCurve;
 import model.dtoModel.CurveDTO;
@@ -33,14 +35,11 @@ import java.util.List;
 public class XmlHelper {
 
     private static final XmlHelper instance = new XmlHelper();
-
+    SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 
     private XmlHelper() {
 
     }
-
-    SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-
 
     public static XmlHelper getInstance() {
         return instance;

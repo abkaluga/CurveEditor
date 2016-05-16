@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -64,18 +63,27 @@ class CubicSpineInterpolationCalculator implements ICalculator {
     }
 
     private IPoint[] getNewPoints(int size) {
+        List<Double> xs = Collections.emptyList();
+        List<Double> ys = Collections.emptyList();
         if (xsF.isCancelled() || ysF.isCancelled()) {
             return new IPoint[0];
-        }
-        IPoint newPoints[] = new IPoint[size + 1];
-        IntStream.rangeClosed(0, size).parallel().forEach(i -> {
-            newPoints[i] = new Point();
+        } else {
             try {
-                newPoints[i].setX(xsF.get().get(i).intValue());
-                newPoints[i].setY(ysF.get().get(i).intValue());
-            } catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
+                xs = xsF.get();
+                ys = ysF.get();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
             }
+
+        }
+
+        IPoint newPoints[] = new IPoint[size + 1];
+        List<Double> finalXs = xs;
+        List<Double> finalYs = ys;
+        IntStream.range(0, xs.size()).parallel().forEach(i -> {
+            newPoints[i] = new Point();
+            newPoints[i].setX(finalXs.get(i).intValue());
+            newPoints[i].setY(finalYs.get(i).intValue());
 
         });
         return newPoints;
@@ -134,7 +142,6 @@ class CubicSpineInterpolationCalculator implements ICalculator {
             for (int j = 1; j <= n - 1; ++j)
                 m[i + 1][j] -= temp * m[i][j];
         }
-
 
         double sum;
         double s[] = new double[n];

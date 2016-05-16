@@ -2,11 +2,11 @@ package view;
 
 import controler.CanvasListener;
 import controler.MainWindowController;
-import utils.XmlHelper;
 import model.ICurve;
 import model.IPoint;
 import model.viewModel.MainWindowModel;
 import utils.ImageFilter;
+import utils.XmlHelper;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

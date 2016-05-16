@@ -1,6 +1,9 @@
 package controler;
 
-import model.*;
+import model.ICurve;
+import model.IPoint;
+import model.Interpolated;
+import model.Point;
 import model.beziere.BeziereCurve;
 import model.beziere.BeziereHornerCurve;
 import model.beziere.RationalBeziereHornerCurve;
@@ -38,7 +41,7 @@ class BeziereHornerCalculator implements ICalculator {
 
     }
 
-    private IPoint[] getNewPoints(List<IPoint> ps, boolean rational) {
+    IPoint[] getNewPoints(List<IPoint> ps, boolean rational) {
         int size = (ps.size()) * 100;
         IPoint newPoints[] = new IPoint[size + 1];
         IntStream.rangeClosed(0, size).parallel().forEach(i -> {

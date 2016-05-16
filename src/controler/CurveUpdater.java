@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -13,7 +14,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class CurveUpdater {
 
-    static ExecutorService executor = Executors.newFixedThreadPool(4);
+    static ExecutorService executor = Executors.newCachedThreadPool();
 
     private static Map<ICurve.CurveType, ICalculator> calculators = new HashMap<>();
 
@@ -24,12 +25,15 @@ public class CurveUpdater {
         calculators.put(ICurve.CurveType.RationalBeziereHorner, BeziereHornerCalculator.getAnInstance());
         calculators.put(ICurve.CurveType.BezieredeCastel, BezieredeCastelCalculator.getAnInstance());
         calculators.put(ICurve.CurveType.RationalBezieredeCastel, BezieredeCastelCalculator.getAnInstance());
+        calculators.put(ICurve.CurveType.BeziereInterpolated, BeziereInterpolationCalculator.getAnInstance());
     }
 
     private CurveUpdater() {
     }
 
     static public void update(ICurve curve, AtomicBoolean dirtyIndicator) {
+        ThreadPoolExecutor exe = (ThreadPoolExecutor) executor;
+        System.out.println(exe.getTaskCount());
         if (curve.getPoints().size() > 1) {
             executor.execute(() -> ConvexHullCalculator.getAnInstance().calculate(curve, dirtyIndicator));
             ICalculator specyficCalculator = calculators.get(curve.getType());

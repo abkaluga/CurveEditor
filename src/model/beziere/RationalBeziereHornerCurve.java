@@ -1,8 +1,5 @@
 package model.beziere;
 
-import model.Interpolated;
-
-import java.awt.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**

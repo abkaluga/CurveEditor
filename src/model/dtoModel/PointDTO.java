@@ -1,12 +1,10 @@
 package model.dtoModel;
 
-import com.sun.istack.internal.NotNull;
 import model.IPoint;
 import model.Point;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.awt.*;
 
 /**
  * Created by Albert on 16.04.2016.

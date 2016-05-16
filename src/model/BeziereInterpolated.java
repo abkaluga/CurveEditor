@@ -1,18 +1,15 @@
-package model.beziere;
+package model;
 
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * Created by Albert on 16.04.2016.
+ * Created by Albert on 16.05.2016.
  */
-public class BeziereHornerCurve extends BeziereCurve {
+public class BeziereInterpolated extends Interpolated {
     public static final AtomicLong count = new AtomicLong(1);
-
 
     @Override
     public CurveType getType() {
-        return CurveType.BeziereHorner;
+        return ICurve.CurveType.BeziereInterpolated;
     }
-
-
 }

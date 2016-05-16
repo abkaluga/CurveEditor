@@ -36,8 +36,8 @@ class CustomCanvas extends JPanel {
         ICurve selected = (ICurve) model.getCurveModel().getSelectedItem();
         if (selected != null) {
             selected.drawSelected(g);
-        if (model.getConvexHullModel().isSelected()) {
-            selected.drawConvexHull(g);
+            if (model.getConvexHullModel().isSelected()) {
+                selected.drawConvexHull(g);
             }
         }
     }

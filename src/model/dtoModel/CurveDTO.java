@@ -60,6 +60,8 @@ public class CurveDTO {
             case RationalBezieredeCastel:
                 curve = new RationalBeziereHornerCurve();
                 break;
+            case BeziereInterpolated:
+                curve = new BeziereInterpolated();
         }
         curve.setColor(new Color(dto.getColor()));
         curve.setName(dto.getName());
