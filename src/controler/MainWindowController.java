@@ -6,8 +6,15 @@ import model.viewModel.MainWindowModel;
 import utils.NameGenerator;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.IntStream;
+
+import static model.ICurve.CurveType.Beziere;
+import static model.ICurve.CurveType.Chain;
+import static model.ICurve.CurveType.RationalBeziere;
 
 /**
  * Created by Albert on 20.03.2016.
@@ -66,8 +73,17 @@ public class MainWindowController {
     }
 
     public void handleAddCurve() {
-        ICurve curve = null;
+        Optional<String> name = Optional.empty();
+        Optional<List<IPoint>> points = Optional.empty();
+        Color color = (Color) model.getColorModel().getSelectedItem();
         ICurve.CurveType type = (ICurve.CurveType) model.getCurveTypeModel().getSelectedItem();
+        createCurve(name, points, color, type);
+        handleCurveChange();
+    }
+
+    private void createCurve(Optional<String> name, Optional<List<IPoint>> points, Color color, ICurve.CurveType type) {
+        ICurve curve = null;
+
 
         switch (type) {
             case NewtonInterpolated:
@@ -88,13 +104,32 @@ public class MainWindowController {
         }
 
 
-        curve.setColor((Color) model.getColorModel().getSelectedItem());
-        NameGenerator.generateName(curve);
+        curve.setColor(color);
+        if (name.isPresent()) {
+            curve.setName(name.get());
+        } else {
+            NameGenerator.generateName(curve);
+        }
+        if (points.isPresent()) {
+            curve.setPoints(points.get());
+            CurveUpdater.update(curve, model.isDirty());
+        } else {
+            curve.setPoints(Collections.emptyList());
+        }
         model.getCurveModel().addElement(curve);
         model.getCurveModel().setSelectedItem(curve);
-        handleCurveChange();
     }
 
+    public void handleTransformCurve() {
+        ICurve selected = (ICurve) model.getCurveModel().getSelectedItem();
+        Optional<String> name = Optional.of(selected.getName());
+        Optional<List<IPoint>> points = Optional.of(new ArrayList<>(selected.getPoints()));
+        Color color = selected.getColor();
+        ICurve.CurveType type = (ICurve.CurveType) model.getCurveTypeModel().getSelectedItem();
+        createCurve(name, points, color, type);
+        model.getCurveModel().removeElement(selected);
+        handleCurveChange();
+    }
     public void handleRemoveCurve() {
         ICurve curve = (ICurve) model.getCurveModel().getSelectedItem();
         model.getCurveModel().removeElement(curve);
@@ -131,4 +166,5 @@ public class MainWindowController {
         }
 
     }
+
 }

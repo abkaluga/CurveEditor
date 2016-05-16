@@ -100,6 +100,12 @@
               <toolTipText value="curve Type"/>
             </properties>
           </component>
+          <component id="15ac4" class="javax.swing.JButton" binding="transformCurve">
+            <constraints/>
+            <properties>
+              <text value="Transform"/>
+            </properties>
+          </component>
         </children>
       </toolbar>
       <grid id="57caf" binding="canvasPanel" layout-manager="BorderLayout" hgap="0" vgap="0">

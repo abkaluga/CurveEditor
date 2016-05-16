@@ -46,6 +46,7 @@ public class MainWindow extends JFrame {
     private JSpinner ySpinner;
     private JComboBox curveComboboxType;
     private JCheckBox convexHull;
+    private JButton transformCurve;
     private CustomCanvas canvas;
 
 
@@ -83,6 +84,10 @@ public class MainWindow extends JFrame {
         curveComboBox.addItemListener(e -> controller.handleCurveChange());
         deletePointButton.addActionListener(e -> controller.handleRemovePointFromCurve());
         curveColorComboBox.addItemListener(e -> controller.handleColorChange());
+
+        transformCurve.addActionListener(e -> {
+            controller.handleTransformCurve();
+        });
         loadBackgroudButton.addActionListener(new ActionListener() {
             JFileChooser fc = new JFileChooser(FileSystemView.getFileSystemView());
 
