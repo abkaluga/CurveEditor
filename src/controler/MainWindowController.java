@@ -155,6 +155,7 @@ public class MainWindowController {
             model.getyModel().setValue(p.getY());
             model.getWeighModel().setValue(p.getWeigh());
             model.getLockSpinners().release();
+            model.isDirty().compareAndSet(false, true);
         }
 
     }
@@ -198,54 +199,31 @@ public class MainWindowController {
         List<IPoint> oldPoints = c.getPoints();
         int n = oldPoints.size() - 1;
         int m = n + 1;
-        List<IPoint> newPoints = new ArrayList<>(oldPoints.subList(0, n));
+        List<IPoint> newPoints = new ArrayList<>(oldPoints);
+        Collections.fill(newPoints, null);
 
 
         if (n % 2 == 1) {
             newPoints.set(0, oldPoints.get(0));
             int h = (n - 1) / 2;
-            for (int i = 1; i >= h; ++i) {
-                IPoint p = new Point();
-                IPoint oP = oldPoints.get(i);
-                IPoint nP = newPoints.get(i - 1);
-                p.setX((m * oP.getX() - i * nP.getX()) / (m - i));
-                p.setY((m * oP.getY() - i * nP.getY()) / (m - i));
-                p.setX((int) ((m * oP.getWeigh() - i * nP.getWeigh()) / (m - i)));
-                newPoints.set(i, p);
+            for (int i = 1; i <= h; ++i) {
+                firstPhase(oldPoints, m, newPoints, i);
             }
-            newPoints.set(n - 1, oldPoints.get(n - 1));
-            for (int i = n - 1; i >= h + 2; i--) {
-                IPoint p = new Point();
-                IPoint oP = oldPoints.get(i);
-                IPoint nP = newPoints.get(i);
-                p.setX((m * oP.getX() - (m - i) * nP.getX()) / i);
-                p.setY((m * oP.getY() - (m - i) * nP.getY()) / i);
-                p.setWeigh(((m * oP.getWeigh() - (m - i) * nP.getWeigh()) / i));
-                newPoints.set(i - 1, p);
+            newPoints.set(n, oldPoints.get(n));
+            for (int i = n; i >= h + 2; i--) {
+                secondPhase(oldPoints, m, newPoints, i);
             }
 
         } else {
             newPoints.set(0, oldPoints.get(0));
             int h = (n) / 2;
-            for (int i = 1; i >= h; ++i) {
-                IPoint p = new Point();
-                IPoint oP = oldPoints.get(i);
-                IPoint nP = newPoints.get(i - 1);
-                p.setX((m * oP.getX() - i * nP.getX()) / (m - i));
-                p.setY((m * oP.getY() - i * nP.getY()) / (m - i));
-                p.setX((int) ((m * oP.getWeigh() - i * nP.getWeigh()) / (m - i)));
-                newPoints.set(i, p);
+            for (int i = 1; i <= h; ++i) {
+                firstPhase(oldPoints, m, newPoints, i);
             }
             IPoint qP = newPoints.get(h);
-            newPoints.set(n - 1, oldPoints.get(n - 1));
-            for (int i = n - 1; i >= h + 1; i--) {
-                IPoint p = new Point();
-                IPoint oP = oldPoints.get(i);
-                IPoint nP = newPoints.get(i);
-                p.setX((m * oP.getX() - (m - i) * nP.getX()) / i);
-                p.setY((m * oP.getY() - (m - i) * nP.getY()) / i);
-                p.setWeigh(((m * oP.getWeigh() - (m - i) * nP.getWeigh()) / i));
-                newPoints.set(i - 1, p);
+            newPoints.set(n, oldPoints.get(n));
+            for (int i = n; i >= h + 1; i--) {
+                secondPhase(oldPoints, m, newPoints, i);
             }
             IPoint hP = newPoints.get(h);
             hP.setX((hP.getX() + qP.getX()) / 2);
@@ -255,5 +233,29 @@ public class MainWindowController {
         c.setPoints(newPoints);
         handleCurveChange();
         CurveUpdater.update(c, model.isDirty());
+    }
+
+    private void secondPhase(List<IPoint> oldPoints, int m, List<IPoint> newPoints, int i) {
+        IPoint p = new Point();
+        int opX = oldPoints.get(i).getX(), opY = oldPoints.get(i).getY();
+        float opW = oldPoints.get(i).getWeigh();
+        int npX = newPoints.get(i).getX(), npY = newPoints.get(i).getY();
+        float npW = newPoints.get(i).getWeigh();
+        p.setX((m * opX - (m - i) * npX) / i);
+        p.setY((m * opY - (m - i) * npY) / i);
+        p.setWeigh(((m * opW - (m - i) * npW) / i));
+        newPoints.set(i - 1, p);
+    }
+
+    private void firstPhase(List<IPoint> oldPoints, int m, List<IPoint> newPoints, int i) {
+        IPoint p = new Point();
+        int opX = oldPoints.get(i).getX(), opY = oldPoints.get(i).getY();
+        float opW = oldPoints.get(i).getWeigh();
+        int npX = newPoints.get(i - 1).getX(), npY = newPoints.get(i - 1).getY();
+        float npW = newPoints.get(i - 1).getWeigh();
+        p.setX((m * opX - i * npX) / (m - i));
+        p.setY((m * opY - i * npY) / (m - i));
+        p.setWeigh((int) ((m * opW - i * npW) / (m - i)));
+        newPoints.set(i, p);
     }
 }
