@@ -2,6 +2,7 @@ package view;
 
 import model.Curve;
 import model.ICurve;
+import model.IPoint;
 import model.viewModel.MainWindowModel;
 
 import javax.swing.*;
@@ -39,6 +40,13 @@ class CustomCanvas extends JPanel {
             if (model.getConvexHullModel().isSelected()) {
                 selected.drawConvexHull(g);
             }
+        }
+        IPoint selectedPoint = (IPoint) model.getPointModel().getSelectedItem();
+        if (selectedPoint != null) {
+            Color old = selectedPoint.getColor();
+            selectedPoint.setColor(Color.BLUE);
+            selectedPoint.draw(g);
+            selectedPoint.setColor(old);
         }
     }
 
