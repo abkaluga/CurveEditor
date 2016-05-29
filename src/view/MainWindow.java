@@ -4,6 +4,7 @@ import controler.CanvasListener;
 import controler.MainWindowController;
 import model.ICurve;
 import model.IPoint;
+import model.beziere.BeziereCurve;
 import model.viewModel.MainWindowModel;
 import utils.ImageFilter;
 import utils.XmlHelper;
@@ -47,6 +48,8 @@ public class MainWindow extends JFrame {
     private JComboBox curveComboboxType;
     private JCheckBox convexHull;
     private JButton transformCurve;
+    private JButton lowerDeegreeButton;
+    private JButton riseDeegreeButton;
     private CustomCanvas canvas;
 
 
@@ -70,6 +73,8 @@ public class MainWindow extends JFrame {
         this.setVisible(true);
         this.setMaximumSize(new Dimension(800, 800));
         this.setSize(new Dimension(800, 800));
+        riseDeegreeButton.setVisible(false);
+        lowerDeegreeButton.setVisible(false);
 
         model.getWeighModel().addChangeListener(e -> controller.handlePointSpinnerChange());
 
@@ -81,7 +86,13 @@ public class MainWindow extends JFrame {
 
         addCurve.addActionListener(e -> controller.handleAddCurve());
         deleteCurve.addActionListener(e -> controller.handleRemoveCurve());
-        curveComboBox.addItemListener(e -> controller.handleCurveChange());
+        curveComboBox.addItemListener(e -> {
+            controller.handleCurveChange();
+            Object item = model.getCurveModel().getSelectedItem();
+            boolean visible = item instanceof BeziereCurve;
+            riseDeegreeButton.setVisible(visible);
+            lowerDeegreeButton.setVisible(visible);
+        });
         deletePointButton.addActionListener(e -> controller.handleRemovePointFromCurve());
         curveColorComboBox.addItemListener(e -> controller.handleColorChange());
 
@@ -162,6 +173,7 @@ public class MainWindow extends JFrame {
 
             }
         });
+        riseDeegreeButton.addActionListener(e -> controller.riseBeziereDeegre());
     }
 
     private void initCanvas() {
