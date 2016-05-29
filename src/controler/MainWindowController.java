@@ -230,6 +230,7 @@ public class MainWindowController {
             hP.setY((hP.getY() + qP.getY()) / 2);
             hP.setWeigh((hP.getWeigh() + qP.getWeigh()) / 2);
         }
+        newPoints.remove(n);
         c.setPoints(newPoints);
         handleCurveChange();
         CurveUpdater.update(c, model.isDirty());
