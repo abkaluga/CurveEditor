@@ -174,6 +174,7 @@ public class MainWindow extends JFrame {
             }
         });
         riseDeegreeButton.addActionListener(e -> controller.riseBeziereDeegre());
+        lowerDeegreeButton.addActionListener(e -> controller.lowerDeegree());
     }
 
     private void initCanvas() {

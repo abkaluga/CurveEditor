@@ -190,4 +190,70 @@ public class MainWindowController {
         handleCurveChange();
         CurveUpdater.update(c, model.isDirty());
     }
+
+    public void lowerDeegree() {
+        BeziereCurve c = (BeziereCurve) model.getCurveModel().getSelectedItem();
+
+
+        List<IPoint> oldPoints = c.getPoints();
+        int n = oldPoints.size() - 1;
+        int m = n + 1;
+        List<IPoint> newPoints = new ArrayList<>(oldPoints.subList(0, n));
+
+
+        if (n % 2 == 1) {
+            newPoints.set(0, oldPoints.get(0));
+            int h = (n - 1) / 2;
+            for (int i = 1; i >= h; ++i) {
+                IPoint p = new Point();
+                IPoint oP = oldPoints.get(i);
+                IPoint nP = newPoints.get(i - 1);
+                p.setX((m * oP.getX() - i * nP.getX()) / (m - i));
+                p.setY((m * oP.getY() - i * nP.getY()) / (m - i));
+                p.setX((int) ((m * oP.getWeigh() - i * nP.getWeigh()) / (m - i)));
+                newPoints.set(i, p);
+            }
+            newPoints.set(n - 1, oldPoints.get(n - 1));
+            for (int i = n - 1; i >= h + 2; i--) {
+                IPoint p = new Point();
+                IPoint oP = oldPoints.get(i);
+                IPoint nP = newPoints.get(i);
+                p.setX((m * oP.getX() - (m - i) * nP.getX()) / i);
+                p.setY((m * oP.getY() - (m - i) * nP.getY()) / i);
+                p.setWeigh(((m * oP.getWeigh() - (m - i) * nP.getWeigh()) / i));
+                newPoints.set(i - 1, p);
+            }
+
+        } else {
+            newPoints.set(0, oldPoints.get(0));
+            int h = (n) / 2;
+            for (int i = 1; i >= h; ++i) {
+                IPoint p = new Point();
+                IPoint oP = oldPoints.get(i);
+                IPoint nP = newPoints.get(i - 1);
+                p.setX((m * oP.getX() - i * nP.getX()) / (m - i));
+                p.setY((m * oP.getY() - i * nP.getY()) / (m - i));
+                p.setX((int) ((m * oP.getWeigh() - i * nP.getWeigh()) / (m - i)));
+                newPoints.set(i, p);
+            }
+            IPoint qP = newPoints.get(h);
+            newPoints.set(n - 1, oldPoints.get(n - 1));
+            for (int i = n - 1; i >= h + 1; i--) {
+                IPoint p = new Point();
+                IPoint oP = oldPoints.get(i);
+                IPoint nP = newPoints.get(i);
+                p.setX((m * oP.getX() - (m - i) * nP.getX()) / i);
+                p.setY((m * oP.getY() - (m - i) * nP.getY()) / i);
+                p.setWeigh(((m * oP.getWeigh() - (m - i) * nP.getWeigh()) / i));
+                newPoints.set(i - 1, p);
+            }
+            IPoint hP = newPoints.get(h);
+            hP.setX((hP.getX() + qP.getX()) / 2);
+            hP.setY((hP.getY() + qP.getY()) / 2);
+            hP.setWeigh((hP.getWeigh() + qP.getWeigh()) / 2);
+        }
+        c.setPoints(newPoints);
+        handleCurveChange();
+        CurveUpdater.update(c, model.isDirty());
+    }
 }
