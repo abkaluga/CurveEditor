@@ -176,20 +176,23 @@ public class MainWindowController {
     public void riseBeziereDeegre() {
         BeziereCurve c = (BeziereCurve) model.getCurveModel().getSelectedItem();
         List<IPoint> newPoints = new ArrayList<>(c.getPoints());
-        double m = newPoints.size() + 1;
-        newPoints.add(c.getPoints().get(c.getPoints().size() - 1));
-        for (int i = c.getPoints().size(); i > 0; --i) {
-            IPoint p = new Point();
-            double x = newPoints.get(i).getX(), y = newPoints.get(i).getY(), w = newPoints.get(i).getWeigh();
-            double x1 = newPoints.get(i - 1).getX(), y1 = newPoints.get(i - 1).getY(), w1 = newPoints.get(i - 1).getWeigh();
-            p.setX((int) ((i * x1 + (m - i) * x) / m));
-            p.setY((int) ((i * y1 + (m - i) * y) / m));
-            p.setWeigh((float) ((i * w1 + (m - i) * w) / m));
-            newPoints.set(i, p);
+        if (newPoints.size() > 2) {
+            double m = newPoints.size() + 1;
+            newPoints.add(c.getPoints().get(c.getPoints().size() - 1));
+            for (int i = c.getPoints().size(); i > 0; --i) {
+                IPoint p = new Point();
+                double x = newPoints.get(i).getX(), y = newPoints.get(i).getY(), w = newPoints.get(i).getWeigh();
+                double x1 = newPoints.get(i - 1).getX(), y1 = newPoints.get(i - 1).getY(), w1 = newPoints.get(i - 1).getWeigh();
+                p.setX((int) ((i * x1 + (m - i) * x) / m));
+                p.setY((int) ((i * y1 + (m - i) * y) / m));
+                p.setWeigh((float) ((i * w1 + (m - i) * w) / m));
+                newPoints.set(i, p);
+            }
+            c.setPoints(newPoints);
+            handleCurveChange();
+            CurveUpdater.update(c, model.isDirty());
         }
-        c.setPoints(newPoints);
-        handleCurveChange();
-        CurveUpdater.update(c, model.isDirty());
+
     }
 
     public void lowerDeegree() {
@@ -197,6 +200,9 @@ public class MainWindowController {
 
 
         List<IPoint> oldPoints = c.getPoints();
+        if (oldPoints.size() < 4) {
+            return;
+        }
         int n = oldPoints.size() - 1;
         int m = n + 1;
         List<IPoint> newPoints = new ArrayList<>(oldPoints);

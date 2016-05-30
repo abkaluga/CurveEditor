@@ -34,8 +34,8 @@ public class CanvasListener implements MouseListener, KeyListener, MouseMotionLi
                 controller.addPointToCurve();
             } else {
                 for (IPoint p : curve.getPoints()) {
-                    if (Math.abs(p.getX() - mousePoint.getX()) < 4 &&
-                            Math.abs(p.getY() - mousePoint.getY()) < 4) {
+                    if (Math.abs(p.getX() - mousePoint.getX()) < 8 &&
+                            Math.abs(p.getY() - mousePoint.getY()) < 8) {
                         if (model.getSelectedPoints().contains(p)) {
                             model.getSelectedPoints().remove(p);
                             p.setColor(Color.BLACK);

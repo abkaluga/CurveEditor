@@ -53,7 +53,7 @@ public class Point implements IPoint, Comparable<IPoint> {
     @Override
     public void draw(Graphics g) {
         g.setColor(color);
-        g.drawOval(getX() - 2, getY() - 2, 4, 4);
+        g.drawOval(getX() - 4, getY() - 4, 8, 8);
     }
 
     @Override
