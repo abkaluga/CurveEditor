@@ -17,6 +17,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Optional;
 /*
     TODO :
     1) Disable/enable spinners when no point
@@ -173,8 +174,8 @@ public class MainWindow extends JFrame {
 
             }
         });
-        riseDeegreeButton.addActionListener(e -> controller.riseBeziereDeegre());
-        lowerDeegreeButton.addActionListener(e -> controller.lowerDeegree());
+        riseDeegreeButton.addActionListener(e -> controller.riseBeziereDeegre(openNumberDialog()));
+        lowerDeegreeButton.addActionListener(e -> controller.lowerDeegree(openNumberDialog()));
     }
 
     private void initCanvas() {
@@ -198,5 +199,20 @@ public class MainWindow extends JFrame {
         canvas.addMouseMotionListener(canvasListener);
         canvas.setDoubleBuffered(true);
         canvasPanel.add(canvas);
+    }
+
+
+    private int openNumberDialog() {
+        Integer[] possibilities = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        Optional<Object> num = Optional.ofNullable(JOptionPane.showInputDialog(
+                this,
+                "How many degree?",
+                "Degree dialog",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                possibilities,
+                possibilities[0]));
+
+        return num.isPresent() ? (Integer) num.get() : 0;
     }
 }
