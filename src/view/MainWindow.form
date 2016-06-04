@@ -108,10 +108,10 @@
               <toolTipText value="curve"/>
             </properties>
           </component>
-          <component id="961d7" class="javax.swing.JComboBox" binding="curveColorComboBox">
+          <component id="864e2" class="javax.swing.JButton" binding="selectColorButton" default-binding="true">
             <constraints/>
             <properties>
-              <toolTipText value="curve Color"/>
+              <text value="selectColor"/>
             </properties>
           </component>
           <component id="e48ce" class="javax.swing.JComboBox" binding="curveComboboxType">

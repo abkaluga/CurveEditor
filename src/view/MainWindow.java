@@ -42,7 +42,6 @@ public class MainWindow extends JFrame {
     private JSpinner wigthSpiner;
     private JPanel mainPanel;
     private JButton saveAsJpgButton;
-    private JComboBox<Color> curveColorComboBox;
     private JButton deletePointButton;
     private JSpinner xSpinner;
     private JSpinner ySpinner;
@@ -52,6 +51,7 @@ public class MainWindow extends JFrame {
     private JButton lowerDeegreeButton;
     private JButton riseDeegreeButton;
     private JButton splitButton;
+    private JButton selectColorButton;
     private CustomCanvas canvas;
 
 
@@ -63,7 +63,7 @@ public class MainWindow extends JFrame {
         controller = new MainWindowController(model);
         initCanvas();
         wigthSpiner.setModel(model.getWeighModel());
-        curveColorComboBox.setModel(model.getColorModel());
+        // curveColorComboBox.setModel(model.getColorModel());
         curveComboBox.setModel(model.getCurveModel());
         pointComboBox.setModel(model.getPointModel());
         editMode.setModel(model.getEditModeButton());
@@ -98,11 +98,8 @@ public class MainWindow extends JFrame {
             splitButton.setVisible(visible);
         });
         deletePointButton.addActionListener(e -> controller.handleRemovePointFromCurve());
-        curveColorComboBox.addItemListener(e -> controller.handleColorChange());
 
-        transformCurve.addActionListener(e -> {
-            controller.handleTransformCurve();
-        });
+        transformCurve.addActionListener(e -> controller.handleTransformCurve());
         loadBackgroudButton.addActionListener(new ActionListener() {
             JFileChooser fc = new JFileChooser(FileSystemView.getFileSystemView());
 
@@ -182,6 +179,19 @@ public class MainWindow extends JFrame {
         splitButton.addActionListener(e -> {
             SplitDialog dialog = new SplitDialog((BeziereCurve) model.getCurveModel().getSelectedItem(), canvas);
             controller.splitBeziereCurve(dialog.getSplitValue());
+        });
+        selectColorButton.addActionListener(e -> {
+            Color c = JColorChooser.showDialog(
+                    MainWindow.this,
+                    "Select Curve color",
+                    Color.BLACK
+            );
+            if (c != null) {
+                selectColorButton.setForeground(c);
+                model.setColorModel(c);
+                controller.handleColorChange();
+            }
+
         });
     }
 

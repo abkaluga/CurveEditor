@@ -71,7 +71,7 @@ public class MainWindowController {
     public void handleAddCurve() {
         Optional<String> name = Optional.empty();
         Optional<List<IPoint>> points = Optional.empty();
-        Color color = (Color) model.getColorModel().getSelectedItem();
+        Color color = model.getColor();
         ICurve.CurveType type = (ICurve.CurveType) model.getCurveTypeModel().getSelectedItem();
         createCurve(name, points, color, type);
         handleCurveChange();
@@ -141,9 +141,11 @@ public class MainWindowController {
 
     public void handleColorChange() {
         ICurve curve = (ICurve) model.getCurveModel().getSelectedItem();
-        Color color = (Color) model.getColorModel().getSelectedItem();
-        curve.setColor(color);
-        model.isDirty().compareAndSet(false, true);
+        if (curve != null) {
+            Color color = model.getColor();
+            curve.setColor(color);
+            model.isDirty().compareAndSet(false, true);
+        }
     }
 
     public void handlePointChange() {
@@ -212,7 +214,7 @@ public class MainWindowController {
         BeziereSplitter.getInstance().split(c.getPoints(), splitValue, l, r);
         createCurve(Optional.of(c.getName()), Optional.of(l), c.getColor(), c.getType());
         CurveUpdater.update((ICurve) model.getCurveModel().getSelectedItem(), model.isDirty());
-        createCurve(Optional.empty(), Optional.of(r), new Color(c.getColor().getRGB() * -1), c.getType());
+        createCurve(Optional.empty(), Optional.of(r), new Color(~c.getColor().getRGB()), c.getType());
         CurveUpdater.update((ICurve) model.getCurveModel().getSelectedItem(), model.isDirty());
         handleCurveChange();
     }

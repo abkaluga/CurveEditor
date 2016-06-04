@@ -18,7 +18,6 @@ public class MainWindowModel {
     private final SpinnerNumberModel weighModel = new SpinnerNumberModel(1.0, 0, Double.POSITIVE_INFINITY, 0.5f);
     private final SpinnerNumberModel xModel = new SpinnerNumberModel(0, 0, 1024, 1);
     private final SpinnerNumberModel yModel = new SpinnerNumberModel(0, 0, 1024, 1);
-    private final DefaultComboBoxModel<Color> colorModel = new DefaultComboBoxModel<>();
     private final DefaultComboBoxModel<ICurve> curveModel = new DefaultComboBoxModel<>();
     private final DefaultComboBoxModel<IPoint> pointModel = new DefaultComboBoxModel<>();
     private final Set<IPoint> selectedPoints = new ConcurrentSkipListSet<>();
@@ -27,23 +26,21 @@ public class MainWindowModel {
     private final AtomicBoolean dirty = new AtomicBoolean(true);
     private final Semaphore lockSpinners = new Semaphore(1, true);
     private final DefaultComboBoxModel<ICurve.CurveType> curveTypeModel = new DefaultComboBoxModel<>(ICurve.CurveType.values());
+    private Color colorModel = Color.BLACK;
     private BufferedImage background;
 
 
-    public MainWindowModel() {
-        Color colors[] = {Color.BLACK, Color.BLUE, Color.RED, Color.GREEN, Color.CYAN, Color.MAGENTA, Color.YELLOW, Color.WHITE};
-        for (Color c : colors) {
-            colorModel.addElement(c);
-            c.getRGB();
-        }
-    }
 
     public SpinnerNumberModel getWeighModel() {
         return weighModel;
     }
 
-    public DefaultComboBoxModel<Color> getColorModel() {
+    public Color getColor() {
         return colorModel;
+    }
+
+    public void setColorModel(Color colorModel) {
+        this.colorModel = colorModel;
     }
 
     public DefaultComboBoxModel<ICurve> getCurveModel() {
