@@ -51,6 +51,7 @@ public class MainWindow extends JFrame {
     private JButton transformCurve;
     private JButton lowerDeegreeButton;
     private JButton riseDeegreeButton;
+    private JButton splitButton;
     private CustomCanvas canvas;
 
 
@@ -76,6 +77,7 @@ public class MainWindow extends JFrame {
         this.setSize(new Dimension(800, 800));
         riseDeegreeButton.setVisible(false);
         lowerDeegreeButton.setVisible(false);
+        splitButton.setVisible(false);
 
         model.getWeighModel().addChangeListener(e -> controller.handlePointSpinnerChange());
 
@@ -93,6 +95,7 @@ public class MainWindow extends JFrame {
             boolean visible = item instanceof BeziereCurve;
             riseDeegreeButton.setVisible(visible);
             lowerDeegreeButton.setVisible(visible);
+            splitButton.setVisible(visible);
         });
         deletePointButton.addActionListener(e -> controller.handleRemovePointFromCurve());
         curveColorComboBox.addItemListener(e -> controller.handleColorChange());
@@ -174,8 +177,12 @@ public class MainWindow extends JFrame {
 
             }
         });
-        riseDeegreeButton.addActionListener(e -> controller.riseBeziereDeegre(openNumberDialog()));
-        lowerDeegreeButton.addActionListener(e -> controller.lowerDeegree(openNumberDialog()));
+        riseDeegreeButton.addActionListener(e -> controller.riseBeziereDegree(openNumberDialog()));
+        lowerDeegreeButton.addActionListener(e -> controller.lowerBeziereDegree(openNumberDialog()));
+        splitButton.addActionListener(e -> {
+            SplitDialog dialog = new SplitDialog((BeziereCurve) model.getCurveModel().getSelectedItem(), canvas);
+            controller.splitBeziereCurve(dialog.getSplitValue());
+        });
     }
 
     private void initCanvas() {

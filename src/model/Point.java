@@ -12,6 +12,21 @@ public class Point implements IPoint, Comparable<IPoint> {
     private float weigh = 1;
     private Color color = Color.black;
 
+    public Point() {
+        this(0, 0, 1, Color.BLACK);
+    }
+
+    private Point(int x, int y, float weigh, Color color) {
+        this.x = x;
+        this.y = y;
+        this.weigh = weigh;
+        this.color = color;
+    }
+
+    public Point(IPoint point) {
+        this(point.getX(), point.getY(), point.getWeigh(), point.getColor());
+    }
+
     @Override
     public int getX() {
         return x;

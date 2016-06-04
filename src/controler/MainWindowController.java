@@ -204,4 +204,16 @@ public class MainWindowController {
     }
 
 
+    public void splitBeziereCurve(double splitValue) {
+        BeziereCurve c = (BeziereCurve) model.getCurveModel().getSelectedItem();
+        model.getCurveModel().removeElement(c);
+        List<IPoint> r = new ArrayList<>();
+        List<IPoint> l = new ArrayList<>();
+        BeziereSplitter.getInstance().split(c.getPoints(), splitValue, l, r);
+        createCurve(Optional.of(c.getName()), Optional.of(l), c.getColor(), c.getType());
+        CurveUpdater.update((ICurve) model.getCurveModel().getSelectedItem(), model.isDirty());
+        createCurve(Optional.empty(), Optional.of(r), new Color(c.getColor().getRGB() * -1), c.getType());
+        CurveUpdater.update((ICurve) model.getCurveModel().getSelectedItem(), model.isDirty());
+        handleCurveChange();
+    }
 }

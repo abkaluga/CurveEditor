@@ -73,6 +73,12 @@
               <text value="Rise deegree"/>
             </properties>
           </component>
+          <component id="3e21a" class="javax.swing.JButton" binding="splitButton" default-binding="true">
+            <constraints/>
+            <properties>
+              <text value="Split"/>
+            </properties>
+          </component>
         </children>
       </toolbar>
       <toolbar id="8bbcc">

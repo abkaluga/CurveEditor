@@ -7,6 +7,7 @@ import model.viewModel.MainWindowModel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
 
 /**
  * Created by Albert on 03.04.2016.
@@ -15,7 +16,7 @@ class CustomCanvas extends JPanel {
 
 
     private final MainWindowModel model;
-
+    Ellipse2D.Double splitPoint;
     private long lastRepaint = System.currentTimeMillis();
 
 
@@ -47,6 +48,13 @@ class CustomCanvas extends JPanel {
             selectedPoint.setColor(Color.BLUE);
             selectedPoint.draw(g);
             selectedPoint.setColor(old);
+        }
+        if (splitPoint != null) {
+            Color old = selectedPoint.getColor();
+            selectedPoint.setColor(Color.RED);
+            ((Graphics2D) g).fill(splitPoint);
+            selectedPoint.setColor(old);
+
         }
     }
 
