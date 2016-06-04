@@ -30,8 +30,7 @@ public class CanvasListener implements MouseListener, KeyListener, MouseMotionLi
                 model.getxModel().setValue(e.getPoint().x);
                 model.getyModel().setValue(e.getPoint().y);
                 model.getLockSpinners().release();
-
-                controller.addPointToCurve();
+                controller.addPointToCurve(model.getPointModel().getIndexOf(model.getPointModel().getSelectedItem()));
             } else {
                 for (IPoint p : curve.getPoints()) {
                     if (Math.abs(p.getX() - mousePoint.getX()) < 8 &&

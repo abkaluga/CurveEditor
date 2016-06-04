@@ -2,10 +2,7 @@ package controler;
 
 import model.*;
 import model.Point;
-import model.beziere.BeziereCurve;
-import model.beziere.BeziereHornerCurve;
-import model.beziere.BezieredeCastelCurve;
-import model.beziere.RationalBeziereHornerCurve;
+import model.beziere.*;
 import model.viewModel.MainWindowModel;
 import utils.NameGenerator;
 
@@ -14,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.IntStream;
 
 /**
  * Created by Albert on 20.03.2016.
@@ -27,7 +25,7 @@ public class MainWindowController {
     }
 
 
-    public void addPointToCurve() {
+    public void addPointToCurve(int position) {
         if (model.getCurveModel().getSize() > 0) {
             ICurve curve = (ICurve) model.getCurveModel().getSelectedItem();
             IPoint point = new Point();
@@ -36,8 +34,8 @@ public class MainWindowController {
             point.setY(model.getyModel().getNumber().intValue());
 
             List<IPoint> points = new ArrayList<>(curve.getPoints());
-            points.add(point);
-            model.getPointModel().addElement(point);
+            points.add(position + 1, point);
+            model.getPointModel().insertElementAt(point, position + 1);
             model.getPointModel().setSelectedItem(point);
             curve.setPoints(points);
             CurveUpdater.update((ICurve) model.getCurveModel().getSelectedItem(), model.isDirty());
@@ -103,7 +101,7 @@ public class MainWindowController {
                 curve = new BezieredeCastelCurve();
                 break;
             case RationalBezieredeCastel:
-                curve = new RationalBeziereHornerCurve();
+                curve = new RationalBezieredeCastelCurve();
                 break;
             case BeziereInterpolated:
                 curve = new BeziereInterpolated();
@@ -155,6 +153,13 @@ public class MainWindowController {
             model.getyModel().setValue(p.getY());
             model.getWeighModel().setValue(p.getWeigh());
             model.getLockSpinners().release();
+            IntStream.range(0, model.getPointModel().getSize())
+                    .parallel().forEach((i) -> {
+                if (Color.BLUE.equals(model.getPointModel().getElementAt(i).getColor())) {
+                    model.getPointModel().getElementAt(i).setColor(Color.black);
+                }
+            });
+            p.setColor(Color.BLUE);
             model.isDirty().compareAndSet(false, true);
         }
 
