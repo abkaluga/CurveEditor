@@ -6,50 +6,37 @@ import model.beziere.BezieredeCastelCurve;
 import model.beziere.RationalBeziereHornerCurve;
 import model.beziere.RationalBezieredeCastelCurve;
 
+import java.util.EnumMap;
+import java.util.Map;
+
 /**
  * Created by Albert on 28.03.2016.
  */
 public class NameGenerator {
+
+    private static final Map<ICurve.CurveType, Namer> formats = new EnumMap<>(ICurve.CurveType.class);
+
+    static {
+        formats.put(ICurve.CurveType.Chain, new Namer("PolygonalChain #%d", PolygonalChain.count));
+        formats.put(ICurve.CurveType.NewtonInterpolated, new Namer("Newton Interpolated #%d", NewtonInterpolated.count));
+        formats.put(ICurve.CurveType.CubicSpineInterpolated, new Namer("Cubic spine #%d", CubicSpineInterpolated.count));
+        formats.put(ICurve.CurveType.BeziereHorner, new Namer("Beziere(Horner)  #%d", BeziereHornerCurve.count));
+        formats.put(ICurve.CurveType.BezieredeCastel, new Namer("Beziere(deCastel)  #%d", BezieredeCastelCurve.count));
+        formats.put(ICurve.CurveType.RationalBeziereHorner, new Namer("Rational Beziere (Horner)  #%d", RationalBeziereHornerCurve.count));
+        formats.put(ICurve.CurveType.RationalBezieredeCastel, new Namer("Rational Beziere (deCastel) #%d", RationalBezieredeCastelCurve.count));
+        formats.put(ICurve.CurveType.BeziereInterpolated, new Namer("Beziere Interpolated  #%d", BeziereInterpolated.count));
+    }
 
     private NameGenerator() {
         // Intentionally left empty
     }
 
     public static void generateName(ICurve c) {
-        if (c instanceof PolygonalChain) {
-            c.setName(String.format("PolygonalChain #%d", PolygonalChain.count.getAndIncrement()));
-            return;
+        Namer namer = formats.get(c.getType());
+        if (namer != null) {
+            c.setName(namer.getNextName());
+        } else {
+            c.setName("Class not found");
         }
-        if (c instanceof NewtonInterpolated) {
-            c.setName(String.format("Interpolated #%d", NewtonInterpolated.count.getAndIncrement()));
-            return;
-        }
-
-        if (c instanceof CubicSpineInterpolated) {
-            c.setName(String.format("Cubic spine #%d", CubicSpineInterpolated.count.getAndIncrement()));
-            return;
-        }
-        if (c instanceof BeziereHornerCurve) {
-            c.setName(String.format("Beziere(Horner)  #%d", BeziereHornerCurve.count.getAndIncrement()));
-            return;
-        }
-        if (c instanceof RationalBeziereHornerCurve) {
-            c.setName(String.format("Rational Beziere (Horner) #%d", RationalBeziereHornerCurve.count.getAndIncrement()));
-            return;
-        }
-        if (c instanceof BezieredeCastelCurve) {
-            c.setName(String.format("Beziere(Castel)  #%d", BezieredeCastelCurve.count.getAndIncrement()));
-            return;
-        }
-        if (c instanceof RationalBezieredeCastelCurve) {
-            c.setName(String.format("Rational Beziere (Castel)  #%d", RationalBezieredeCastelCurve.count.getAndIncrement()));
-            return;
-        }
-        if (c instanceof BeziereInterpolated) {
-            c.setName(String.format("Beziere Interpolated  #%d", BeziereInterpolated.count.getAndIncrement()));
-            return;
-        }
-
-        c.setName("ERROR 404");
     }
 }
