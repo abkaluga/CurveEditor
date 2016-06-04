@@ -25,6 +25,7 @@ public class BeziereInterpolated extends Curve {
     @Override
     public void draw(Graphics g) {
         Graphics2D g2D = (Graphics2D) g;
+        g.setColor(getColor());
         curves.forEach(g2D::draw);
     }
 }
