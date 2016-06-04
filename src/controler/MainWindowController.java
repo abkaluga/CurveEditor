@@ -178,7 +178,7 @@ public class MainWindowController {
 
     }
 
-    public void riseBeziereDeegre(int i) {
+    public void riseBeziereDegree(int i) {
         ICurve c = (BeziereCurve) model.getCurveModel().getSelectedItem();
         if (c.getPoints().size() > 2) {
             while (i-- > 0 && c.getPoints().size() > 2) {
@@ -191,7 +191,7 @@ public class MainWindowController {
     }
 
 
-    public void lowerDeegree(int i) {
+    public void lowerBeziereDegree(int i) {
         ICurve c = (BeziereCurve) model.getCurveModel().getSelectedItem();
 
         if (c.getPoints().size() > 3) {
