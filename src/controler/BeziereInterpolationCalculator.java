@@ -80,9 +80,6 @@ public class BeziereInterpolationCalculator implements ICalculator {
         double xm2 = xc2 + (xc3 - xc2) * k2;
         double ym2 = yc2 + (yc3 - yc2) * k2;
 
-        // Resulting control points. Here smooth_value is mentioned
-        // above coefficient K whose value should be in range [0...1].
-
         ctrl1.setX((int) (xm1 + (xc2 - xm1) * smooth_value + p1.getX() - xm1));
         ctrl1.setY((int) (ym1 + (yc2 - ym1) * smooth_value + p1.getY() - ym1));
 
