@@ -33,6 +33,7 @@ public class SplitDialog extends JDialog {
             IPoint p = points.get(splitPlace.getValue());
             canvas.splitPoint = new Ellipse2D.Double(p.getX() - (dil / 2), p.getY() - (dil / 2), dil, dil);
         });
+        this.setSize(200, 200);
         this.setVisible(true);
     }
 

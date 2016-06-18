@@ -105,6 +105,8 @@ public class CanvasListener implements MouseListener, KeyListener, MouseMotionLi
                 case KeyEvent.VK_D + 32:
                     moveSelectedPoints(1, 0);
                     break;
+                default:
+                    break;
             }
         }
     }

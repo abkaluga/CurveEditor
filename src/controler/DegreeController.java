@@ -45,7 +45,7 @@ public class DegreeController {
         Collections.fill(newPoints, null);
 
 
-        if (n % 2 == 1) {
+        if ((n & 1) == 1) {
             newPoints.set(0, oldPoints.get(0));
             int h = (n - 1) / 2;
             for (int i = 1; i <= h; ++i) {
